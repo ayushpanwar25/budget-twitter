@@ -4,7 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
 
-const User = require('./models/User');
+const User = require('../models/User');
 
 passport.use(new LocalStrategy(function verify(username, password, done) {
   User.findOne({ username: username }, function (err, user) {
@@ -38,10 +38,11 @@ router.post('/log-in', passport.authenticate('local', function (req, res) {
 
 router.post("/sign-up", async (req, res) => {
   const { username, password } = req.body;
+  console.log(username, password);
   User
     .findOne({ username: username })
     .then((user) => {
-      if (user) return res.status(400).json("User already exists")
+      if (user) return res.json("username already exists");
     })
   bcrypt
     .hash(password, 16)
@@ -50,7 +51,7 @@ router.post("/sign-up", async (req, res) => {
       user.save();
     })
     .then(res.json("Successfully registered"))
-    .catch(err => res.status(422).json(err));
+    .catch(err => res.json(err));
 });
 
 router.get('/log-out', (req, res) => {
@@ -60,3 +61,15 @@ router.get('/log-out', (req, res) => {
     res.send("Logged out successfully");
   });
 })
+
+router.get('/authchecker', (req, res) => {
+  const sessUser = req.session.user;
+  if (sessUser) {
+    return res.json(sessUser);
+  }
+  else {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+});
+
+module.exports = router;

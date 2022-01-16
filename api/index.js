@@ -3,7 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const app = express();
 const session = require('express-session');
-const MongoStore = require("connect-mongo");
+const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -15,7 +15,7 @@ mongoose
 
 const sessionStore = MongoStore.create({
   mongoUrl: process.env.MONGO_URL,
-  collectionName: "user-sessions"
+  collectionName: 'sessions'
 });
 
 app.use(express.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use(session({
   saveUninitialized: false,
   store: sessionStore,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 3,
+    maxAge: 300000,
     sameSite: false,
     secure: false
   }
