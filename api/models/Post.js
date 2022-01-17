@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   author: { type: String, required: true },
+  authorID: { type: String, required: true },
   text: { type: String, required: true },
   posted: { type: Date, default: Date.now }
 }, {

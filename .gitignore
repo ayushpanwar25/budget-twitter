@@ -5,12 +5,14 @@
 /node_modules
 /.pnp
 .pnp.js
+/src/backup
 
 # testing
 /coverage
 
 # production
 /build
+
 
 # misc
 .DS_Store
