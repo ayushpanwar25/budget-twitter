@@ -1,44 +1,42 @@
-import {
-  POST_SUCCESS,
-  POST_FAILURE,
-  GET_POSTS,
-  DELETE_POST,
-} from "../actions/types";
-
-
 const initialState = {
-  isAuthenticated: null,
-  posts: null,
+  posts: [],
 };
 
 export default function (state = initialState, action) {
 
   switch (action.type) {
-    /*case REGISTER_SUCCESS:
+    case "FETCH_SUCCESS":
       return {
-        ...state,
-        user: action.payload
+        posts: action.payload
       };
 
-    case LOGIN_SUCCESS:
-    case AUTH_SUCCESS:
+    case "POST_SUCCESS":
       return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload
-      };
-
-    case AUTH_ERROR:
-    case LOGIN_FAIL:
-    case LOGOUT_SUCCESS:
-    case REGISTER_FAIL:
-    case AUTH_FAIL:
-      return {
-        ...state,
-        user: null,
-        isAuthenticated: false,
+        posts: [...state.posts, action.payload]
       }
-*/
+
+    case "EDIT_SUCCESS":
+      state.posts.map(post => {
+        if (post.id === action.payload.id) {
+          return action.payload;
+        }
+        return post;
+      });
+      return {
+        posts: [...state.posts]
+      }
+
+    case "DELETE_SUCCESS":
+      state.posts.map(post => {
+        if (post.id === action.payload) {
+          return null;
+        }
+        return post;
+      });
+      return {
+        posts: [...state.posts]
+      }
+
     default:
       return state;
   }

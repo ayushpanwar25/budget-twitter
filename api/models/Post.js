@@ -11,8 +11,9 @@ const PostSchema = new Schema({
 });
 
 PostSchema.method("toJSON", function () {
-  const { posted, ...object } = this.toObject();
-  object.posted = added.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
+  const { _id, posted, ...object } = this.toObject();
+  object.id = _id;
+  object.posted = posted.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
   return object;
 });
 

@@ -22,8 +22,8 @@ router.post("/create", async (req, res) => {
   const post = new Post({ author: author, authorID: authorID, text: text });
   post
     .save()
-    .then(res.json("Posted successfully"))
-    .catch(err => res.json(err));
+    .then(res.json(post))
+    .catch(err => console.log(err));
 });
 
 router.post("/edit/:id", (req, res) => {
@@ -31,7 +31,7 @@ router.post("/edit/:id", (req, res) => {
   Post.findById(req.params.id).exec(async (err, post) => {
     post.text = text;
     post.save()
-      .then(res.json("Posted updated"))
+      .then(res.json(post))
       .catch(err => res.json(err));
   });
 });
@@ -39,7 +39,7 @@ router.post("/edit/:id", (req, res) => {
 router.delete('/delete/:id', (req, res) => {
   Post.findByIdAndDelete(req.params.id).exec(async (err, post) => {
     if (err) throw err;
-    res.json("Post deleted");
+    res.json(id);
   });
 });
 

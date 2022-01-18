@@ -21,7 +21,6 @@ const sessionStore = MongoStore.create({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(session({
-  name: process.env.COOKIE_NAME,
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
@@ -42,7 +41,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
-  res.send("connected to lidl-twitter-api");
+  res.send("connected to budget-twitter-api");
 });
 
 app.use("/api/users", require("./routes/users"));

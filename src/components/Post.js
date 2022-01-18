@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import './Post.css';
 
 class Post extends React.Component {
+
+  static propTypes = {
+    post: PropTypes.object
+  }
+
   render() {
     return (
       <div className="post">
@@ -21,3 +26,5 @@ class Post extends React.Component {
     );
   }
 }
+
+export default Post;

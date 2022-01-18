@@ -1,0 +1,22 @@
+.right-menu {
+  display: flex;
+  flex-direction: column;
+}
+.hidden {
+  display: none;
+}
+
+.sign-up-form.visible {
+  display: flex;
+  background-color: white;
+  border: 2px solid rgb(78, 42, 0);
+  width: 60%;
+}
+
+.menu-btn {
+  background-color: rgb(78, 42, 0);
+  color: white;
+  border: none;
+  width: 60%;
+  padding: 2%;
+}

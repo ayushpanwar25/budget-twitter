@@ -9,8 +9,10 @@
 }
 
 .branding {
+  flex-wrap: nowrap;
+  flex: 1;
   font-weight: 900;
-  font-size: 7em;
+  font-size: 6em;
 }
 
 .main-header {
@@ -20,11 +22,15 @@
   justify-content: space-between;
   text-align: right;
   padding-top: 5%;
-  padding-bottom: 2%;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
 }
 
 .feed,
 .right-menu {
   flex: 1;
-  text-align: center;
+}
+
+.info {
+  color: rgb(100, 100, 100);
 }

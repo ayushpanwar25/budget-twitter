@@ -6,6 +6,9 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/User');
 
+router.use(express.urlencoded({ extended: false }));
+router.use(express.json());
+
 passport.use(new LocalStrategy(function verify(username, password, done) {
   User.findOne({ username: username }, function (err, user) {
     if (err) return done(err);
@@ -21,20 +24,23 @@ passport.use(new LocalStrategy(function verify(username, password, done) {
 }));
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  const sessData = { id: user.id, username: user.username };
+  done(null, sessData);
 });
 
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
+passport.deserializeUser(function (miniUser, done) {
+  User.findById(miniUser.id, function (err, user) {
     done(err, user);
   });
 });
 
-router.post('/log-in', passport.authenticate('local', function (req, res) {
-  const sessUser = { id: req.User.id, username: req.User.username };
-  req.session.User = sessUser;
-  res.json(sessUser);
-}));
+router.use(passport.initialize());
+router.use(passport.session());
+
+router.post('/log-in', passport.authenticate('local'), function (req, res) {
+  //console.log(req.user);
+  res.json(req.session.passport.user);
+});
 
 router.post("/sign-up", async (req, res) => {
   const { username, password } = req.body;
@@ -62,14 +68,15 @@ router.get('/log-out', (req, res) => {
   });
 })
 
-router.get('/authchecker', (req, res) => {
-  const sessUser = req.session.user;
-  if (sessUser) {
-    return res.json(sessUser);
+router.get('/verify', function (req, res) {
+  try {
+    const sessUser = req.session.passport.user;
   }
-  else {
-    return res.status(401).json({ msg: "Unauthorized" });
+  catch (err) {
+    return res.status(401).send("Unauthorized");
   }
-});
+  return res.json(req.session.passport.user);
+}
+);
 
 module.exports = router;

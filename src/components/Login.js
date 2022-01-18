@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { signup } from "../actions/auth";
-import './SignUp.css';
+import { login } from "../actions/auth";
+//import './Login.css';
 
-class SignUp extends React.Component {
+class Login extends React.Component {
 
   state = {
     username: "",
@@ -15,7 +15,7 @@ class SignUp extends React.Component {
     e.preventDefault();
     const { username, password } = this.state;
     const newUser = { username, password };
-    this.props.signup(newUser);
+    this.props.login(newUser);
   }
 
   render() {
@@ -23,7 +23,6 @@ class SignUp extends React.Component {
       <form onSubmit={this.onSubmit} className="signup-form">
         <label htmlFor="username">Username</label>
         <input
-          id="username"
           type="text"
           className="form-input"
           value={this.state.username}
@@ -40,7 +39,7 @@ class SignUp extends React.Component {
         />
         <input
           type="submit"
-          value="Sign Up"
+          value="LOG IN"
           className="btn"
         />
       </form>
@@ -48,10 +47,10 @@ class SignUp extends React.Component {
   }
 }
 
-SignUp.propTypes = {
-  signup: PropTypes.func
+Login.propTypes = {
+  login: PropTypes.func
 };
 
 const mapStateToProps = () => ({});
 
-export default connect(mapStateToProps, { signup })(SignUp);
+export default connect(mapStateToProps, { login })(Login);

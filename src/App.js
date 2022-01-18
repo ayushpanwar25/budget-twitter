@@ -1,35 +1,32 @@
 import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-//import Feed from './components/Feed';
-//import RightBar from './components/RightBar';
-import SignUp from './components/SignUp';
-import logo from './logo.svg';
+import Feed from './components/Feed';
+import RightMenu from './components/RightMenu';
+import { checkAuthentication } from './actions/auth';
 import './App.css';
 function App() {
 
-  /*useEffect(() => {
-    // Check if session cookie is present
-    const isAuth = this.props.isAuth();
+  const dispatch = useDispatch();
 
-  });*/
+  useEffect(() => {
+    dispatch(checkAuthentication());
+  });
 
   return (
     <div className="App">
       <header className="main-header">
         <div className="branding">
-          budget twitter
+          budget
+          twitter
         </div>
-        <div className="header-buttons">
-
+        <div className="info">
+          twitter-like blog site made with MERN stack.
+          by Ayush Panwar
         </div>
       </header>
-      <div className="feed">
-        Coming Soon!
-      </div>
-      <div className="right-menu">
-        <SignUp />
-      </div>
+      <Feed />
+      <RightMenu />
     </div>
   )
 }

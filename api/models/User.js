@@ -9,9 +9,8 @@ const UserSchema = new Schema({
 });
 
 UserSchema.method("toJSON", function () {
-  const { _id, added, ...object } = this.toObject();
+  const { _id, ...object } = this.toObject();
   object.id = _id;
-  object.added = added.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
   return object;
 });
 
