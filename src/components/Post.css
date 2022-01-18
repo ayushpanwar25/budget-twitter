@@ -2,9 +2,27 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 80%;
+  box-sizing: border-box;
+  width: 100%;
   background-color: white;
   box-shadow: 5px 5px 5px rgba(212, 212, 212, 0.5);
-  font-family: Lato, sans-serif;
+  font-family: "Noto Serif", serif;
+  color: black;
   padding: 1rem;
+}
+
+.post-footer {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+hr {
+  border: none;
+  border-top: 2px dotted rgb(145, 145, 145);
+  color: #fff;
+  background-color: #fff;
+  height: 0px;
+  width: 100%;
 }

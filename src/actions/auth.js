@@ -1,21 +1,26 @@
-import axios from "axios";
-
-axios.defaults.baseURL = "http://192.168.0.10:5000";
+import client from './axiosConfig';
 
 export const checkAuthentication = () => (dispatch) => {
-  axios
+  client
     .get("/api/users/verify", { withCredentials: true })
-    .then((res) =>
-      dispatch({
-        type: "AUTH_SUCCESS",
-        payload: res.user
-      })
-    )
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: "AUTH_SUCCESS",
+          payload: res.data
+        });
+      }
+      else {
+        dispatch({
+          type: "AUTH_FAIL"
+        });
+      }
+    })
     .catch(() => {
       dispatch({
         type: "AUTH_FAIL"
-      });
-    });
+      })
+    })
 }
 
 export const signup = ({ username, password }) => (dispatch) => {
@@ -26,7 +31,7 @@ export const signup = ({ username, password }) => (dispatch) => {
   };
   const body = JSON.stringify({ username, password });
   console.log(body);
-  axios
+  client
     .post("/api/users/sign-up", body, headers)
     .then((res) => {
       console.log(res.data);
@@ -46,10 +51,9 @@ export const login = ({ username, password }) => (dispatch) => {
     }
   };
   const body = JSON.stringify({ username, password });
-  axios
+  client
     .post("/api/users/log-in", body, headers)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: res.data
@@ -64,7 +68,7 @@ export const login = ({ username, password }) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  axios
+  client
     .delete("/api/users/logout", { withCredentials: true })
     .then(() =>
       dispatch({

@@ -1,9 +1,7 @@
-import axios from "axios";
-
-axios.defaults.baseURL = "http://192.168.0.10:5000";
+import client from './axiosConfig';
 
 export const getAll = () => (dispatch) => {
-  axios
+  client
     .get("/api/posts/getAll")
     .then((res) =>
       dispatch({
@@ -19,7 +17,7 @@ export const getAll = () => (dispatch) => {
 }
 
 export const getByAuthor = (authorID) => (dispatch) => {
-  axios
+  client
     .get(`/api/posts/get/${authorID}`)
     .then((res) =>
       dispatch({
@@ -41,7 +39,7 @@ export const create = ({ author, authorID, text }) => (dispatch) => {
     }
   };
   const body = JSON.stringify({ author, authorID, text });
-  axios
+  client
     .post("/api/posts/create", body, headers)
     .then((res) => {
       dispatch({
@@ -63,7 +61,7 @@ export const edit = (id, text) => (dispatch) => {
     }
   };
   const body = JSON.stringify(text);
-  axios
+  client
     .post(`/api/posts/edit/${id}`, body, headers)
     .then((res) => {
       dispatch({
@@ -79,7 +77,7 @@ export const edit = (id, text) => (dispatch) => {
 };
 
 export const deletepost = (id) => (dispatch) => {
-  axios
+  client
     .delete(`/api/posts/delete/${id}`)
     .then((res) =>
       dispatch({

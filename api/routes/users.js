@@ -18,6 +18,7 @@ passport.use(new LocalStrategy(function verify(username, password, done) {
       if (!isMatch) {
         return done(null, false, { message: 'Incorrect username or password.' });
       }
+      console.log("LOGGED IN AS: " + user.username);
       return done(null, user);
     });
   });
@@ -38,8 +39,7 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 router.post('/log-in', passport.authenticate('local'), function (req, res) {
-  //console.log(req.user);
-  res.json(req.session.passport.user);
+  res.status(200).send(req.session.passport.user);
 });
 
 router.post("/sign-up", async (req, res) => {
@@ -60,22 +60,27 @@ router.post("/sign-up", async (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.get('/log-out', (req, res) => {
+router.delete('/logout', (req, res) => {
+  //const user = req.session.passport.user;
   req.session.destroy((err) => {
     if (err) throw err;
-    res.clearCookie("session-id");
+    res.clearCookie("passport");
     res.send("Logged out successfully");
+    //console.log("LOGGED OUT: " + user.username);
   });
 })
 
 router.get('/verify', function (req, res) {
   try {
-    const sessUser = req.session.passport.user;
+    const sessUserId = req.session.passport.user.id;
+    User.findById(sessUserId, function (err, user) {
+      if (err || !user) throw err;
+    });
   }
   catch (err) {
     return res.status(401).send("Unauthorized");
   }
-  return res.json(req.session.passport.user);
+  return res.status(200).json(req.session.passport.user);
 }
 );
 

@@ -11,11 +11,14 @@ class Login extends React.Component {
     password: ""
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     const newUser = { username, password };
     this.props.login(newUser);
+    /*if (this.props.isAuthenticated) {
+      window.location.reload(false);
+    }*/
   }
 
   render() {
@@ -48,9 +51,12 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func
+  login: PropTypes.func,
+  isAuthenticated: PropTypes.bool
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 
 export default connect(mapStateToProps, { login })(Login);

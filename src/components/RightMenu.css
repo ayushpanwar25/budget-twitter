@@ -1,7 +1,11 @@
 .right-menu {
   display: flex;
   flex-direction: column;
+  padding-top: 5%;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
 }
+
 .hidden {
   display: none;
 }

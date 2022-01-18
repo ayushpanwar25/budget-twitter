@@ -1,23 +1,14 @@
 .feed {
   height: 100vh;
+  flex: 1;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
-  font-family: Lato, sans-serif;
-  flex-shrink: 0;
   overflow-y: scroll;
-  border: 1px solid #d4d4d4;
-  height: 100vh;
-}
-
-.feed-header {
-  position: fixed;
-  background-color: rgb(78, 42, 0);
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding: 0.4rem;
-  padding-left: 1rem;
-  width: 33%;
+  border-left: 1px solid rgb(78, 42, 0, 0.452);
+  border-right: 1px solid rgba(78, 42, 0, 0.452);
+  padding: 1rem;
+  gap: 1rem;
 }
 
 ::-webkit-scrollbar {
@@ -26,15 +17,11 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgb(255, 248, 240);
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgb(192, 69, 69);
-}
-
-/* Handle on hover */
+::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(78, 42, 0);
 }

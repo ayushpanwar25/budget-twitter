@@ -5,12 +5,13 @@ const initialState = {
 
 export default function (state = initialState, action) {
 
+  console.log(action.type);
+
   switch (action.type) {
 
     case "LOGIN_SUCCESS":
     case "AUTH_SUCCESS":
       return {
-        ...state,
         isAuthenticated: true,
         user: action.payload
       };
@@ -21,7 +22,6 @@ export default function (state = initialState, action) {
     case "SIGNUP_SUCCESS":
     case "SIGNUP_FAIL":
     case "AUTH_FAIL":
-      console.log("NOT AUTHENTICATED");
       return {
         ...state,
         user: null,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import { logout } from "../actions/auth";
 import SignUp from './SignUp';
 import Login from './Login';
 import './RightMenu.css'
@@ -10,6 +11,7 @@ class RightMenu extends React.Component {
   static propTypes = {
     isAuth: PropTypes.bool,
     user: PropTypes.object,
+    logout: PropTypes.func
   }
 
   constructor(props) {
@@ -31,17 +33,24 @@ class RightMenu extends React.Component {
   render() {
     return (
       <div className="right-menu">
-        <div className="create-post">
-
-        </div>
-        <button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
-        <div className={`sign-up-form ${this.state.SignUpClass}`}>
-          <SignUp />
-        </div>
-        <button className="menu-btn" onClick={this.expandLogIn}>EXISTING USER? LOG IN</button>
-        <div className={`sign-up-form ${this.state.LogInClass}`}>
-          <Login />
-        </div>
+        {!this.props.isAuth ?
+          <div className="menu-buttons">
+            <button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
+            <div className={`sign-up-form ${this.state.SignUpClass}`}>
+              <SignUp />
+            </div>
+            <button className="menu-btn" onClick={this.expandLogIn}>EXISTING USER? LOG IN</button>
+            <div className={`sign-up-form ${this.state.LogInClass}`}>
+              <Login />
+            </div>
+          </div>
+          :
+          <div className="menu-buttons">
+            <button className="menu-btn">CREATE POST</button>
+            <button className="menu-btn">MY POSTS</button>
+            <button className="menu-btn" onClick={this.props.logout}>LOGOUT</button>
+          </div>
+        }
       </div>
     )
   }
@@ -52,4 +61,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps)(RightMenu);
+export default connect(mapStateToProps, { logout })(RightMenu);

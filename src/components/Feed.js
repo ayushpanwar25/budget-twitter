@@ -19,9 +19,6 @@ class Feed extends React.Component {
   render() {
     return (
       <div className="feed">
-        <div className="feed-header">
-          FEED
-        </div>
         {this.props.posts.map(post => (
           <Post
             key={post.id}
