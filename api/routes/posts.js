@@ -17,7 +17,7 @@ const isAuthenticated = (req) => {
 }
 
 router.get("/getAll", async (req, res) => {
-  Post.find({}).sort({ posted: 1 }).exec((err, posts) => {
+  Post.find({}).sort({ posted: -1 }).exec((err, posts) => {
     if (err) throw err;
     res.json(posts);
   });

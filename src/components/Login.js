@@ -27,7 +27,7 @@ class Login extends React.Component {
         <TextField
           id="username"
           label="Username"
-          variant="filled"
+          variant="outlined"
           value={this.state.username}
           onChange={(e) => this.setState({ username: e.target.value })}
         />
@@ -35,14 +35,14 @@ class Login extends React.Component {
           id="password"
           label="Password"
           type="password"
-          variant="filled"
+          variant="outlined"
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
         <Button
           type="submit"
           variant="contained"
-          className="btn">{this.state.signingIn}</Button>
+          className="submit-btn">{this.state.signingIn}</Button>
       </form>
     )
   }

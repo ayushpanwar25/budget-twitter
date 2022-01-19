@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { logout } from "../actions/auth";
 import SignUp from './SignUp';
 import Login from './Login';

@@ -21,6 +21,7 @@ class CreatePost extends React.Component {
     const { id, username } = this.props.user;
     const newPost = { username, id, text };
     this.props.create(newPost);
+    this.setState({ text: "" });
   }
 
   render() {
@@ -32,7 +33,7 @@ class CreatePost extends React.Component {
           variant="outlined"
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })} />
-        <Button
+        <Button className="submit-btn"
           type="submit"
           variant="contained"
         >&quot;TWEET&quot;</Button>

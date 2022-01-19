@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
 
     case "POST_SUCCESS":
       return {
-        posts: [...state.posts, action.payload]
+        posts: [action.payload, ...state.posts]
       }
 
     case "EDIT_SUCCESS":

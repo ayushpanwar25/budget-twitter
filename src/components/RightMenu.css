@@ -50,3 +50,7 @@
   width: 100%;
   gap: 1rem;
 }
+
+.submit-btn {
+  background-color: black;
+}

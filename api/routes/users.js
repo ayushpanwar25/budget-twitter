@@ -18,7 +18,7 @@ passport.use(new LocalStrategy(function verify(username, password, done) {
       if (!isMatch) {
         return done(null, false, { message: 'Incorrect username or password.' });
       }
-      console.log("LOGGED IN AS: " + user.username);
+      console.log(user.username + " logged in");
       return done(null, user);
     });
   });
@@ -44,14 +44,13 @@ router.post('/log-in', passport.authenticate('local'), function (req, res) {
 
 router.post("/sign-up", async (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
   User
     .findOne({ username: username })
     .then((user) => {
       if (user) return res.json("username already exists");
     })
   bcrypt
-    .hash(password, 16)
+    .hash(password, 12)
     .then(hashedPassword => {
       const user = new User({ username: username, password: hashedPassword });
       user.save();
@@ -61,12 +60,12 @@ router.post("/sign-up", async (req, res) => {
 });
 
 router.delete('/logout', (req, res) => {
-  //const user = req.session.passport.user;
+  const user = req.session.passport.user;
   req.session.destroy((err) => {
     if (err) throw err;
     res.clearCookie("passport");
     res.send("Logged out successfully");
-    //console.log("LOGGED OUT: " + user.username);
+    console.log(user.username + " logged out");
   });
 })
 
@@ -83,6 +82,5 @@ router.get('/verify', function (req, res) {
   return res.status(200).json(req.session.passport.user);
 }
 );
-
 
 module.exports = router;

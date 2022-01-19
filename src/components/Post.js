@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import PostOptions from './PostOptions';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
@@ -16,7 +16,7 @@ class Post extends React.Component {
     const { isAuth } = this.props;
     return (
       <div className="post">
-        {this.props.isAuth && <PostOptions post={this.props.post} />}
+        {this.props.isAuth && <PostOptions className="showOnHover" post={this.props.post} />}
         <div className="post-body-text">
           {this.props.post.text}
         </div>

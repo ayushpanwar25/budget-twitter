@@ -47,4 +47,4 @@ app.get("/", (req, res) => {
 app.use("/api/users", require("./routes/users"));
 app.use("/api/posts", require("./routes/posts"));
 
-app.listen(process.env.PORT, () => console.log("app listening on port " + process.env.PORT));
+app.listen(process.env.PORT, () => console.log("API listening on port " + process.env.PORT));

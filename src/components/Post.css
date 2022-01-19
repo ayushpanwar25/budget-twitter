@@ -27,3 +27,7 @@ hr {
   height: 0px;
   width: 100%;
 }
+
+.showOnHover {
+  display: none;
+}
