@@ -14,11 +14,9 @@ class Post extends React.Component {
 
   render() {
     const { isAuth } = this.props;
-    //const posted = formatDistanceToNow(new Date(this.props.post.posted), { addSuffix: true });
-    //console.log(this.props.post);
     return (
       <div className="post">
-        <PostOptions authorID={this.props.post.authorID} />
+        {this.props.isAuth && <PostOptions post={this.props.post} />}
         <div className="post-body-text">
           {this.props.post.text}
         </div>

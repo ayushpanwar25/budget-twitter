@@ -27,14 +27,9 @@ export default function (state = initialState, action) {
       }
 
     case "DELETE_SUCCESS":
-      state.posts.map(post => {
-        if (post.id === action.payload) {
-          return null;
-        }
-        return post;
-      });
       return {
-        posts: [...state.posts]
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.payload)
       }
 
     default:

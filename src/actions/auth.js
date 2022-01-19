@@ -30,7 +30,6 @@ export const signup = ({ username, password }) => (dispatch) => {
     }
   };
   const body = JSON.stringify({ username, password });
-  console.log(body);
   client
     .post("/users/sign-up", body, headers)
     .then((res) => {

@@ -79,13 +79,13 @@ export const edit = (id, text) => (dispatch) => {
 export const deletepost = (id) => (dispatch) => {
   client
     .delete(`/posts/delete/${id}`)
-    .then((res) =>
+    .then((res) => {
       dispatch({
         type: "DELETE_SUCCESS",
         payload: res.data
       })
-    )
-    .catch((err) => {
+    })
+    .catch(() => {
       dispatch({
         type: "DELETE_FAIL"
       });

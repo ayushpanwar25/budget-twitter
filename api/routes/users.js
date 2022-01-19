@@ -72,7 +72,6 @@ router.delete('/logout', (req, res) => {
 
 router.get('/verify', function (req, res) {
   try {
-    console.log(req.session);
     const sessUserId = req.session.passport.user.id;
     User.findById(sessUserId, function (err, user) {
       if (err || !user) throw err;
@@ -84,5 +83,6 @@ router.get('/verify', function (req, res) {
   return res.status(200).json(req.session.passport.user);
 }
 );
+
 
 module.exports = router;

@@ -2,28 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import { deletepost } from '../actions/posts';
 import { FaTrashAlt } from "react-icons/fa";
 import './Post.css';
 
 class PostOptions extends React.Component {
 
   static propTypes = {
-    isAuth: PropTypes.bool,
     user: PropTypes.object,
-    authorID: PropTypes.string
+    post: PropTypes.object,
+    deletepost: PropTypes.func
   }
 
   render() {
 
-    if (!this.props.isAuth) return (
-      <div className="post-options">
-      </div>
-    );
-
     return (
       <div className="post-options">
-        {this.props.user.id === this.props.authorID &&
-          <button className="delete-post"><FaTrashAlt />
+        {this.props.user.id === this.props.post.authorID &&
+          <button className="delete-post" onClick={() => this.props.deletepost(this.props.post.id)}><FaTrashAlt />
           </button>
         }
       </div>
@@ -32,8 +28,7 @@ class PostOptions extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuthenticated,
   user: state.auth.user
 });
 
-export default connect(mapStateToProps)(PostOptions);
+export default connect(mapStateToProps, { deletepost })(PostOptions);
