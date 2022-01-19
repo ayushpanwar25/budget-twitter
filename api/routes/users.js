@@ -56,8 +56,8 @@ router.post("/sign-up", async (req, res) => {
       const user = new User({ username: username, password: hashedPassword });
       user.save();
     })
-    .then(res.json("Successfully registered"))
-    .catch(err => res.json(err));
+    .then(res.status(200).json("Successfully registered"))
+    .catch(err => res.status(401).json(err));
 });
 
 router.delete('/logout', (req, res) => {
@@ -72,6 +72,7 @@ router.delete('/logout', (req, res) => {
 
 router.get('/verify', function (req, res) {
   try {
+    console.log(req.session);
     const sessUserId = req.session.passport.user.id;
     User.findById(sessUserId, function (err, user) {
       if (err || !user) throw err;

@@ -1,21 +1,24 @@
 import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import PostOptions from './PostOptions';
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import './Post.css';
 
 class Post extends React.Component {
 
   static propTypes = {
     post: PropTypes.object,
-    isAuth: PropTypes.bool,
-    user: PropTypes.object
+    isAuth: PropTypes.bool
   }
 
   render() {
-    const { isAuth, user } = this.props;
-    const { text, author, posted } = this.props.post;
+    const { isAuth } = this.props;
+    //const posted = formatDistanceToNow(new Date(this.props.post.posted), { addSuffix: true });
+    //console.log(this.props.post);
     return (
       <div className="post">
+        <PostOptions authorID={this.props.post.authorID} />
         <div className="post-body-text">
           {this.props.post.text}
         </div>
@@ -25,7 +28,7 @@ class Post extends React.Component {
             {isAuth ? `${this.props.post.author}` : 'Anonymous'}
           </div>
           <div className="post-date">
-            {this.props.post.posted}
+            {formatDistanceToNowStrict(new Date(this.props.post.posted), { addSuffix: true })}
           </div>
         </div>
       </div>
@@ -34,8 +37,7 @@ class Post extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuthenticated,
-  user: state.auth.user
+  isAuth: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps)(Post);

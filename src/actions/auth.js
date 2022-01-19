@@ -2,7 +2,7 @@ import client from './axiosConfig';
 
 export const checkAuthentication = () => (dispatch) => {
   client
-    .get("/api/users/verify", { withCredentials: true })
+    .get("/users/verify", { withCredentials: true })
     .then((res) => {
       if (res.status === 200) {
         dispatch({
@@ -32,10 +32,14 @@ export const signup = ({ username, password }) => (dispatch) => {
   const body = JSON.stringify({ username, password });
   console.log(body);
   client
-    .post("/api/users/sign-up", body, headers)
+    .post("/users/sign-up", body, headers)
     .then((res) => {
-      console.log(res.data);
-      dispatch({ type: "SIGNUP_SUCCESS" });
+      if (res.status === 200) {
+        dispatch({ type: "SIGNUP_SUCCESS" });
+      }
+      else {
+        dispatch({ type: "SIGNUP_FAIL" });
+      }
     })
     .catch(() => {
       dispatch({
@@ -52,7 +56,7 @@ export const login = ({ username, password }) => (dispatch) => {
   };
   const body = JSON.stringify({ username, password });
   client
-    .post("/api/users/log-in", body, headers)
+    .post("/users/log-in", body, headers)
     .then((res) => {
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -69,7 +73,7 @@ export const login = ({ username, password }) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
   client
-    .delete("/api/users/logout", { withCredentials: true })
+    .delete("/users/logout", { withCredentials: true })
     .then(() =>
       dispatch({
         type: "LOGOUT_SUCCESS",

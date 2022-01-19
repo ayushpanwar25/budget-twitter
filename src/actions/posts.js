@@ -2,7 +2,7 @@ import client from './axiosConfig';
 
 export const getAll = () => (dispatch) => {
   client
-    .get("/api/posts/getAll")
+    .get("/posts/getAll")
     .then((res) =>
       dispatch({
         type: "FETCH_SUCCESS",
@@ -18,7 +18,7 @@ export const getAll = () => (dispatch) => {
 
 export const getByAuthor = (authorID) => (dispatch) => {
   client
-    .get(`/api/posts/get/${authorID}`)
+    .get(`/posts/get/${authorID}`)
     .then((res) =>
       dispatch({
         type: "FETCH_SUCCESS",
@@ -32,15 +32,15 @@ export const getByAuthor = (authorID) => (dispatch) => {
     });
 }
 
-export const create = ({ author, authorID, text }) => (dispatch) => {
+export const create = ({ username, id, text }) => (dispatch) => {
   const headers = {
     headers: {
       "Content-Type": "application/json"
     }
   };
-  const body = JSON.stringify({ author, authorID, text });
+  const body = JSON.stringify({ author: username, authorID: id, text: text });
   client
-    .post("/api/posts/create", body, headers)
+    .post("/posts/create", body, headers)
     .then((res) => {
       dispatch({
         type: "POST_SUCCESS",
@@ -62,7 +62,7 @@ export const edit = (id, text) => (dispatch) => {
   };
   const body = JSON.stringify(text);
   client
-    .post(`/api/posts/edit/${id}`, body, headers)
+    .post(`/posts/edit/${id}`, body, headers)
     .then((res) => {
       dispatch({
         type: "EDIT_SUCCESS",
@@ -78,7 +78,7 @@ export const edit = (id, text) => (dispatch) => {
 
 export const deletepost = (id) => (dispatch) => {
   client
-    .delete(`/api/posts/delete/${id}`)
+    .delete(`/posts/delete/${id}`)
     .then((res) =>
       dispatch({
         type: "DELETE_SUCCESS",

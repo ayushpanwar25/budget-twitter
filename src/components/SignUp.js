@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { signup } from "../actions/auth";
-import './SignUp.css';
+import { TextField, Button } from '@mui/material';
 
 class SignUp extends React.Component {
 
@@ -11,7 +11,7 @@ class SignUp extends React.Component {
     password: ""
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     const newUser = { username, password };
@@ -20,29 +20,26 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="signup-form">
-        <label htmlFor="username">Username</label>
-        <input
+      <form onSubmit={this.onSubmit} className="input-form">
+        <TextField
           id="username"
-          type="text"
-          className="form-input"
+          label="Username"
+          variant="filled"
           value={this.state.username}
           onChange={(e) => this.setState({ username: e.target.value })}
         />
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
+        <TextField
+          id="password"
+          label="Password"
           type="password"
-          autoComplete="on"
-          className="form-input"
+          variant="filled"
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
-        <input
+        <Button
           type="submit"
-          value="Sign Up"
-          className="btn"
-        />
+          variant="contained"
+        >SIGN UP</Button>
       </form>
     )
   }

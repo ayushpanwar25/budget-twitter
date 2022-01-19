@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { TextField, Button } from '@mui/material';
 import { login } from "../actions/auth";
 //import './Login.css';
 
@@ -8,43 +9,40 @@ class Login extends React.Component {
 
   state = {
     username: "",
-    password: ""
+    password: "",
+    signingIn: "SIGN IN"
   }
 
   onSubmit = async (e) => {
     e.preventDefault();
+    this.setState({ signingIn: "SIGNING IN..." });
     const { username, password } = this.state;
     const newUser = { username, password };
     this.props.login(newUser);
-    /*if (this.props.isAuthenticated) {
-      window.location.reload(false);
-    }*/
   }
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="signup-form">
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          className="form-input"
+      <form onSubmit={this.onSubmit} className="input-form">
+        <TextField
+          id="username"
+          label="Username"
+          variant="filled"
           value={this.state.username}
           onChange={(e) => this.setState({ username: e.target.value })}
         />
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
+        <TextField
+          id="password"
+          label="Password"
           type="password"
-          autoComplete="on"
-          className="form-input"
+          variant="filled"
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
-        <input
+        <Button
           type="submit"
-          value="LOG IN"
-          className="btn"
-        />
+          variant="contained"
+          className="btn">{this.state.signingIn}</Button>
       </form>
     )
   }

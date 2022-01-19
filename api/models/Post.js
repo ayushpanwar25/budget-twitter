@@ -5,15 +5,16 @@ const PostSchema = new Schema({
   author: { type: String, required: true },
   authorID: { type: String, required: true },
   text: { type: String, required: true },
+  hearts: { type: Number, default: 0 },
   posted: { type: Date, default: Date.now }
 }, {
   collection: 'posts'
 });
 
 PostSchema.method("toJSON", function () {
-  const { _id, posted, ...object } = this.toObject();
+  const { _id, ...object } = this.toObject();
   object.id = _id;
-  object.posted = posted.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
+  //object.posted = posted.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
   return object;
 });
 
