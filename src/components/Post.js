@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import nl2br from 'react-nl2br';
 import PropTypes from 'prop-types';
 import PostOptions from './PostOptions';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
@@ -16,17 +17,18 @@ class Post extends React.Component {
     const { isAuth } = this.props;
     return (
       <div className="post">
-        {this.props.isAuth && <PostOptions className="showOnHover" post={this.props.post} />}
         <div className="post-body-text">
-          {this.props.post.text}
+          {nl2br(this.props.post.text)}
         </div>
-        <hr></hr>
         <div className="post-footer">
-          <div className="post-author">
-            {isAuth ? `${this.props.post.author}` : 'Anonymous'}
+          <div className="post-info">
+            {isAuth ? `${this.props.post.author}` : 'Anonymous'},&nbsp;
+            <span className="post-date">
+              {formatDistanceToNowStrict(new Date(this.props.post.posted), { addSuffix: true })}
+            </span>
           </div>
-          <div className="post-date">
-            {formatDistanceToNowStrict(new Date(this.props.post.posted), { addSuffix: true })}
+          <div className="post-options">
+            {this.props.isAuth && <PostOptions className="showOnHover" post={this.props.post} />}
           </div>
         </div>
       </div>

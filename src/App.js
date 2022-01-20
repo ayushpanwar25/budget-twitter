@@ -28,7 +28,7 @@ class App extends React.Component {
           <div className="info">
             <p>Twitter-like blog created with MERN</p>
             <p>Ayush Panwar, 2022</p>
-            <p><a href="https://github.com/payyup/budget-twitter" target="_blank" rel="noreferrer"><FaGithub /> github.com/payyup</a></p>
+            <p><a href="https://github.com/payyup/budget-twitter" target="_blank" rel="noreferrer"><FaGithub className="github-logo" /> github.com/payyup</a></p>
           </div>
         </header>
         <Feed />

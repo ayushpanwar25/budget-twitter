@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { signup } from "../actions/auth";
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 
 class SignUp extends React.Component {
 
@@ -36,11 +36,9 @@ class SignUp extends React.Component {
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
-        <Button
+        <button
           type="submit"
-          variant="contained"
-          className="submit-btn"
-        >SIGN UP</Button>
+          className="submit-btn">Sign Up</button>
       </form>
     )
   }

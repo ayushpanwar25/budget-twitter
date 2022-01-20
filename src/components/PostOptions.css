@@ -1,3 +1,16 @@
 .IconButton {
-  color: rgb(78, 42, 0);
+  color: rgba(0, 217, 255, 0.685);
+}
+
+.post-options {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-weight: 400;
+  color: rgba(0, 217, 255, 0.685);
+}
+
+.post-options-likes {
+  display: flex;
+  align-items: center;
 }

@@ -4,22 +4,37 @@
   justify-content: space-between;
   box-sizing: border-box;
   width: 100%;
-  background-color: white;
-  box-shadow: 5px 5px 5px rgba(212, 212, 212, 0.5);
-  font-family: "Noto Serif", serif;
-  color: black;
-  padding: 1rem;
+  background-color: rgb(15, 15, 15);
+  /*box-shadow: 5px 5px 5px rgba(212, 212, 212, 0.5);*/
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  border: 1px solid #005a69;
+}
+
+.post-body-text {
+  padding: 5%;
 }
 
 .post-footer {
-  font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #005a69;
+  padding: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /*background-color: rgba(0, 217, 255, 0.329);*/
 }
 
-hr {
+.post-date {
+  font-weight: 400;
+}
+
+/*hr {
   border: none;
   border-top: 2px dotted rgb(145, 145, 145);
   color: #fff;
@@ -30,4 +45,4 @@ hr {
 
 .showOnHover {
   display: none;
-}
+}*/

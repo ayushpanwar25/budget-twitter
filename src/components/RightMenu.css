@@ -2,9 +2,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
   padding-top: 7%;
   padding-left: 2rem;
   padding-bottom: 2rem;
+  font-family: Roboto, sans-serif;
+  color: white;
 }
 
 .hidden {
@@ -13,32 +16,35 @@
 
 .pop-up.visible {
   display: flex;
-  background-color: white;
-  box-shadow: 5px 5px 5px rgb(197, 197, 197);
+  flex-direction: column;
+  gap: 1rem;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid #005a69;
   padding: 1rem;
+  border-radius: 20px;
   box-sizing: border-box;
   width: 60%;
 }
 
 .menu-btn {
-  background-color: rgb(78, 42, 0);
+  background-color: #00abc9;
   color: white;
   border: none;
   width: 60%;
   padding: 2%;
+  border-radius: 20px;
   font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 1rem;
-  box-shadow: 5px 5px 5px rgb(197, 197, 197);
   cursor: pointer;
 }
 
 .menu-btn:active {
-  box-shadow: 9px 9px 9px rgb(197, 197, 197);
-  transform: translateY(4px);
+  outline: 2px solid rgb(255, 255, 255);
 }
 
 .menu-buttons {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -53,4 +59,30 @@
 
 .submit-btn {
   background-color: black;
+  color: white;
+  border: 1px solid #005a69;
+  width: 30%;
+  padding: 2%;
+  border-radius: 20px;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-btn:active {
+  background-color: #005a69;
+  color: white;
+  border: 1px solid #005a69;
+  width: 30%;
+  padding: 2%;
+  border-radius: 20px;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
 }

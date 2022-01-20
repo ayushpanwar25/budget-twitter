@@ -11,7 +11,7 @@ router.use(express.json());
 
 passport.use(new LocalStrategy(function verify(username, password, done) {
   User.findOne({ username: username }, function (err, user) {
-    if (err) return done(err);
+    if (err) return done(err, false, { message: 'Something went wrong with the database' });
     if (!user) return done(null, false, { message: 'Incorrect username or password.' });
     bcrypt.compare(password, user.password, function (err, isMatch) {
       if (err) return done(err);
@@ -38,7 +38,7 @@ passport.deserializeUser(function (miniUser, done) {
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.post('/log-in', passport.authenticate('local'), function (req, res) {
+router.post('/log-in', passport.authenticate('local', { failureMessage: true }), function (req, res) {
   res.status(200).send(req.session.passport.user);
 });
 

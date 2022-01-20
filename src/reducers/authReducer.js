@@ -1,5 +1,6 @@
 const initialState = {
   signupSuccess: false,
+  loginResponse: "",
   isAuthenticated: null,
   user: null,
 };
@@ -19,6 +20,12 @@ export default function (state = initialState, action) {
 
     case "AUTH_ERROR":
     case "LOGIN_FAIL":
+      return {
+        user: null,
+        isAuthenticated: false,
+        loginResponse: action.payload
+      };
+
     case "LOGOUT_SUCCESS":
       return {
         ...state,

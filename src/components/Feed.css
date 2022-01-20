@@ -5,14 +5,14 @@
   box-sizing: border-box;
   flex-direction: column;
   overflow-y: scroll;
-  border-left: 1px solid rgb(78, 42, 0, 0.452);
-  border-right: 1px solid rgba(78, 42, 0, 0.452);
+  /*border-left: 1px solid rgba(255, 255, 255, 0.452);
+  border-right: 1px solid rgba(255, 255, 255, 0.452);*/
   padding: 1rem;
   gap: 1rem;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  display: none;
 }
 
 /* Track */

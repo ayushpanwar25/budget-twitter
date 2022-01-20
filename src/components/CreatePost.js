@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { create } from "../actions/posts";
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 
 class CreatePost extends React.Component {
 
@@ -29,14 +29,14 @@ class CreatePost extends React.Component {
       <form onSubmit={this.onSubmit} className="input-form">
         <TextField
           id="post-text"
-          label="Text"
+          label="Bottom Text"
           variant="outlined"
+          multiline
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })} />
-        <Button className="submit-btn"
+        <button
           type="submit"
-          variant="contained"
-        >&quot;TWEET&quot;</Button>
+          className="submit-btn">&quot;Tweet&quot;</button>
       </form>
     )
   }

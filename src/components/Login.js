@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import { login } from "../actions/auth";
 //import './Login.css';
 
@@ -9,13 +9,11 @@ class Login extends React.Component {
 
   state = {
     username: "",
-    password: "",
-    signingIn: "SIGN IN"
+    password: ""
   }
 
   onSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ signingIn: "SIGNING IN..." });
     const { username, password } = this.state;
     const newUser = { username, password };
     this.props.login(newUser);
@@ -39,10 +37,9 @@ class Login extends React.Component {
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
-        <Button
+        <button
           type="submit"
-          variant="contained"
-          className="submit-btn">{this.state.signingIn}</Button>
+          className="submit-btn">Sign in</button>
       </form>
     )
   }

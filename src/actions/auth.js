@@ -57,15 +57,25 @@ export const login = ({ username, password }) => (dispatch) => {
   client
     .post("/users/log-in", body, headers)
     .then((res) => {
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: res.data
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: res.data
+        });
+      }
+      else {
+        console.log(res.session);
+        dispatch({
+          type: "LOGIN_FAIL",
+          payload: res.data
+        });
+      }
     }
     )
     .catch((err) => {
       dispatch({
-        type: "LOGIN_FAIL"
+        type: "LOGIN_FAIL",
+        payload: "Incorrect username or password"
       });
     });
 };

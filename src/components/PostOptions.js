@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-//import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { deletepost } from '../actions/posts';
 import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 //import { FaTrashAlt } from "react-icons/fa";
 import './PostOptions.css';
 
@@ -21,10 +21,16 @@ class PostOptions extends React.Component {
     return (
       <div className="post-options">
         {this.props.user.id === this.props.post.authorID &&
-          <IconButton className="IconButton" aria-label="delete" onClick={() => this.props.deletepost(this.props.post.id)}>
-            <DeleteIcon className="IconButton" />
+          <IconButton aria-label="delete" onClick={() => this.props.deletepost(this.props.post.id)}>
+            <DeleteOutlineOutlinedIcon className="IconButton" />
           </IconButton>
         }
+        <div className="post-options-likes">
+          <IconButton aria-label="like">
+            <FavoriteBorderOutlinedIcon className="IconButton" />
+          </IconButton>
+          {this.props.post.hearts}
+        </div>
       </div>
     )
   }
