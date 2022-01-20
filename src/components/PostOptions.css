@@ -1,5 +1,5 @@
 .IconButton {
-  color: rgba(0, 217, 255, 0.685);
+  color: #00abc9;
 }
 
 .post-options {
@@ -7,7 +7,7 @@
   justify-content: right;
   align-items: center;
   font-weight: 400;
-  color: rgba(0, 217, 255, 0.685);
+  color: #00abc9;
 }
 
 .post-options-likes {

@@ -7,25 +7,6 @@ import Login from './Login';
 import UserCard from './UserCard';
 import CreatePost from './CreatePost';
 import './RightMenu.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: '#00abc9',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-    background: {
-      default: '#000000'
-    },
-    text: {
-      primary: '#ffffff',
-    },
-  }
-});
 
 class RightMenu extends React.Component {
 
@@ -60,34 +41,32 @@ class RightMenu extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <div className="right-menu">
-          {!this.props.isAuth ?
-            <div className="menu-buttons">
-              <button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
-              <div className={`pop-up ${this.state.SignUpClass}`}>
-                <SignUp />
-                {this.props.signupSuccess ? <p className='error-message'>Sign up successful!</p> : null}
-              </div>
-              <button className="menu-btn" onClick={this.expandLogIn}>EXISTING USER? LOG IN</button>
-              <div className={`pop-up ${this.state.LogInClass}`}>
-                <Login />
-                {this.props.loginResponse ? <p className='error-message'>{this.props.loginResponse}</p> : null}
-              </div>
+      <div className="right-menu">
+        {!this.props.isAuth ?
+          <div className="menu-buttons">
+            <button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
+            <div className={`pop-up ${this.state.SignUpClass}`}>
+              <SignUp />
+              {this.props.signupSuccess ? <p>Sign up successful!</p> : null}
             </div>
-            :
-            <div className="menu-buttons">
-              <button className="menu-btn" onClick={this.expandCreatePost}>CREATE POST</button>
-              <div className={`pop-up ${this.state.CreatePostClass}`}>
-                <CreatePost />
-              </div>
-              <button className="menu-btn">MY POSTS</button>
-              <button className="menu-btn" onClick={this.props.logout}>LOGOUT</button>
+            <button className="menu-btn" onClick={this.expandLogIn}>EXISTING USER? LOG IN</button>
+            <div className={`pop-up ${this.state.LogInClass}`}>
+              <Login />
+              {this.props.loginResponse ? <p className='error-message'>{this.props.loginResponse}</p> : null}
             </div>
-          }
-          <UserCard />
-        </div>
-      </ThemeProvider>
+          </div>
+          :
+          <div className="menu-buttons">
+            <button className="menu-btn" onClick={this.expandCreatePost}>CREATE POST</button>
+            <div className={`pop-up ${this.state.CreatePostClass}`}>
+              <CreatePost />
+            </div>
+            <button className="menu-btn">MY POSTS</button>
+            <button className="menu-btn" onClick={this.props.logout}>LOGOUT</button>
+          </div>
+        }
+        <UserCard />
+      </div>
     )
   }
 }

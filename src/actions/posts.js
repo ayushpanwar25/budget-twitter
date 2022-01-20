@@ -1,3 +1,4 @@
+import { Identity } from '@mui/material';
 import client from './axiosConfig';
 
 export const getAll = () => (dispatch) => {
@@ -75,6 +76,38 @@ export const edit = (id, text) => (dispatch) => {
       });
     });
 };
+
+export const like = (id) => (dispatch) => {
+  client
+    .get(`/posts/like/${id}`)
+    .then((res) =>
+      dispatch({
+        type: "LIKE_SUCCESS",
+        payload: id
+      })
+    )
+    .catch(() => {
+      dispatch({
+        type: "LIKE_FAIL"
+      });
+    });
+}
+
+export const dislike = (id) => (dispatch) => {
+  client
+    .get(`/posts/dislike/${id}`)
+    .then((res) =>
+      dispatch({
+        type: "DISLIKE_SUCCESS",
+        payload: id
+      })
+    )
+    .catch(() => {
+      dispatch({
+        type: "DISLIKE_FAIL"
+      });
+    });
+}
 
 export const deletepost = (id) => (dispatch) => {
   client

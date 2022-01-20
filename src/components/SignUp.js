@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { signup } from "../actions/auth";
-import { TextField } from '@mui/material';
 
 class SignUp extends React.Component {
 
@@ -21,18 +20,19 @@ class SignUp extends React.Component {
   render() {
     return (
       <form onSubmit={this.onSubmit} className="input-form">
-        <TextField
-          id="username"
-          label="Username"
-          variant="outlined"
+        <input
+          id="current-username"
+          type="text"
+          className="text-field"
+          placeholder="Username"
           value={this.state.username}
           onChange={(e) => this.setState({ username: e.target.value })}
         />
-        <TextField
-          id="password"
-          label="Password"
+        <input
+          id="current-password"
           type="password"
-          variant="outlined"
+          className="text-field"
+          placeholder="Password"
           value={this.state.password}
           onChange={(e) => this.setState({ password: e.target.value })}
         />

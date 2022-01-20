@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Feed from './components/Feed';
 import RightMenu from './components/RightMenu';
@@ -7,6 +7,7 @@ import { checkAuthentication } from './actions/auth';
 import './App.css';
 import { FaGithub } from 'react-icons/fa'
 import store from './store';
+
 class App extends React.Component {
 
   static propTypes = {
@@ -37,8 +38,6 @@ class App extends React.Component {
     )
   }
 }
-
-
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuthenticated,

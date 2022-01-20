@@ -55,6 +55,20 @@ router.post("/edit/:id", (req, res) => {
   }
 });
 
+router.get("/like/:id", async (req, res) => {
+  Post.findByIdAndUpdate(req.params.id, { $inc: { 'hearts': 1 } }).exec((err, post) => {
+    if (err) throw err;
+    res.json("Post liked");
+  });
+});
+
+router.get("/dislike/:id", async (req, res) => {
+  Post.findByIdAndUpdate(req.params.id, { $inc: { 'hearts': -1 } }).exec((err, post) => {
+    if (err) throw err;
+    res.json("Post disliked");
+  });
+});
+
 router.delete('/delete/:id', (req, res) => {
   if (!isAuthenticated(req)) return res.status(401).send("Unauthorized");
   else {

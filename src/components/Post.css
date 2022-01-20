@@ -12,6 +12,7 @@
 }
 
 .post-body-text {
+  font-size: 1.2rem;
   padding: 5%;
 }
 
@@ -32,6 +33,11 @@
 
 .post-date {
   font-weight: 400;
+}
+
+.post-info {
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 /*hr {

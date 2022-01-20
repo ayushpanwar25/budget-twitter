@@ -16,15 +16,24 @@ export default function (state = initialState, action) {
       }
 
     case "EDIT_SUCCESS":
-      state.posts.map(post => {
-        if (post.id === action.payload.id) {
-          return action.payload;
-        }
-        return post;
-      });
       return {
-        posts: [...state.posts]
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post.id !== action.payload.id) {
+            return post
+          }
+          return {
+            ...post,
+            text: action.payload.text
+          }
+        })
       }
+
+    case "LIKE_SUCCESS":
+      return state
+
+    case "DISLIKE_SUCCESS":
+      return state
 
     case "DELETE_SUCCESS":
       return {

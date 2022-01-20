@@ -5,7 +5,7 @@ const PostSchema = new Schema({
   author: { type: String, required: true },
   authorID: { type: String, required: true },
   text: { type: String, required: true },
-  hearts: { type: Number, default: 0 },
+  hearts: { type: Number, min: 0, default: 0 },
   posted: { type: Date, default: Date.now }
 }, {
   collection: 'posts'
