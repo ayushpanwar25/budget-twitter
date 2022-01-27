@@ -1,49 +1,46 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { Modal, Form, Button } from 'react-bootstrap';
 import { create } from "../actions/posts";
 
-class CreatePost extends React.Component {
+function CreatePost(props) {
 
-  static propTypes = {
-    create: PropTypes.func,
-    user: PropTypes.object
-  };
+  const [text, setText] = useState('');
 
-  state = {
-    text: ""
-  }
-
-  onSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const { text } = this.state;
-    const { id, username } = this.props.user;
+    const { id, username } = props.user;
     const newPost = { username, id, text };
-    this.props.create(newPost);
-    this.setState({ text: "" });
+    props.create(newPost);
+    setText('');
+    props.onHide();
   }
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit} className="input-form">
-        <textarea
-          placeholder="What's on your mind?"
-          className="text-field"
-          id="post-text"
-          rows='5'
-          value={this.state.text}
-          onChange={(e) => this.setState({ text: e.target.value })}
-        />
-        {/*<input
-          type="file"
-          name="image"
-          value="" />*/}
-        <button
-          type="submit"
-          className="submit-btn">&quot;Tweet&quot;</button>
-      </form>
-    )
-  }
+  return (
+    <Modal
+      show={props.show}
+      onHide={props.onHide}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Title id="example-modal-sizes-title-sm">
+        Create Post
+      </Modal.Title>
+      <Modal.Body>
+        <Form onSubmit={onSubmit}>
+          <Form.Control
+            as="textarea" rows={5}
+            type="text"
+            placeholder="What's on your mind?"
+            defaultValue={text}
+            onChange={(e) => setText(e.target.value)}
+            autoComplete="off" />
+          <Button variant="secondary" type="submit">&quot;Tweet&quot;</Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  )
 }
 
 const mapStateToProps = (state) => ({

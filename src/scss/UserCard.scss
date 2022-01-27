@@ -7,21 +7,16 @@
   border-radius: 20px;
   box-sizing: border-box;
   width: 60%;
+  align-items: center;
 }
 
-.user-avatar {
+.def-avatar {
   color: #00abc9;
-  font-size: 3rem;
-  height: 48px;
+  font-size: 4rem;
 }
 
 .user-card-name {
-  font-size: 1.5rem;
+  color: white;
+  font-size: 2rem;
   font-weight: 700;
-}
-
-.user-card-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }

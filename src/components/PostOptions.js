@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deletepost, like, dislike } from '../actions/posts';
 import EditPost from './EditPost';
-import { IconButton } from '@mui/material';
+import Confirmation from './Confirmation';
+import IconButton from '@mui/material/IconButton';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -22,7 +23,15 @@ class PostOptions extends React.Component {
 
   state = {
     liked: false,
-    editpopup: false
+    editpopup: false,
+    deleteconfirm: false
+  }
+
+  componentDidMount() {
+    const { post, user } = this.props;
+    if (post.likes.includes(user.id)) {
+      this.setState({ liked: true });
+    }
   }
 
   render() {
@@ -31,9 +40,14 @@ class PostOptions extends React.Component {
       <div className="post-options">
         {this.props.user.id === this.props.post.authorID &&
           <div className="super-options">
-            <IconButton aria-label="delete" onClick={() => this.props.deletepost(this.props.post.id)}>
+            <IconButton aria-label="delete" onClick={() => this.setState({ deleteconfirm: true })}>
               <DeleteOutlineOutlinedIcon className="IconButton" />
             </IconButton>
+            <Confirmation
+              postid={this.props.post.id}
+              show={this.state.deleteconfirm}
+              onHide={() => this.setState({ deleteconfirm: false })}
+            />
             <IconButton aria-label="edit" onClick={() => this.setState({ editpopup: true })}>
               <EditIcon className="IconButton" />
             </IconButton>
@@ -66,7 +80,7 @@ class PostOptions extends React.Component {
               <FavoriteOutlinedIcon className="IconButton" />
             </IconButton>
           }
-          {this.props.post.hearts}
+          {this.props.post.numLikes}
         </div>
       </div>
     )

@@ -1,0 +1,7 @@
+$navbar-light-brand-color: #00abc9;
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+.navbar-dark .navbar-brand {
+  color: $navbar-light-brand-color;
+}

@@ -39,10 +39,10 @@ router.use(passport.session());
 
 router.post('/login', function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
-    if (err) return next(err);
+    if (err) return res.status(401).send(info.message);
     if (!user) return res.status(401).send(info.message);
     req.logIn(user, function (err) {
-      if (err) return next(err);
+      if (err) return res.status(401).send(info.message);
       return res.send(req.session.passport.user);
     });
   })(req, res, next);

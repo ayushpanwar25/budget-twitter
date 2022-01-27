@@ -1,60 +1,43 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
+import { React, useState } from 'react';
+import { Modal, Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { editpost } from "../actions/posts";
 
-class EditPost extends React.Component {
+function EditPost(props) {
 
-  static propTypes = {
-    editpost: PropTypes.func,
-    post: PropTypes.object
-  };
+  const [text, setText] = useState('');
 
-  state = {
-    text: this.props.post.text
-  }
-
-  onSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    this.props.editpost(this.props.post.id, this.state.text);
+    props.editpost(props.post.id, text);
   }
 
-  render() {
-    return (
-      <Modal
-        {...this.props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Edit post
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={this.onSubmit} className="input-form">
-            <textarea
-              placeholder="Edit post"
-              id="post-text"
-              rows='5'
-              value={this.state.text}
-              onChange={(e) => this.setState({ text: e.target.value })}
-            />
-            {/*<input
-          type="file"
-          name="image"
-          value="" />*/}
-            <button
-              type="submit"
-              onClick={this.props.onHide}>Edit</button>
-          </form>
-        </Modal.Body>
-      </Modal>
+  return (
+    <Modal
+      show={props.show}
+      onHide={props.onHide}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Title id="example-modal-sizes-title-sm">
+        Edit Post
+      </Modal.Title>
+      <Modal.Body>
+        <Form onSubmit={onSubmit}>
+          <Form.Control
+            as="textarea" rows={5}
+            type="text"
+            placeholder="What's on your mind?"
+            defaultValue={props.post.text}
+            onChange={(e) => setText(e.target.value)}
+            autoComplete="off" />
+          <Button variant="secondary" type="submit">&quot;Tweet&quot;</Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  )
 
-    )
-  }
 }
 
 const mapStateToProps = () => ({});

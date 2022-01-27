@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Image from 'react-bootstrap/Image'
 import PostOptions from './PostOptions';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
-import '../scss/Post.scss';
 
 class Post extends React.Component {
 
@@ -21,7 +20,7 @@ class Post extends React.Component {
         <div className="post-body-text">
           {nl2br(this.props.post.text)}
         </div>
-        <Image rounded="true" className="post-body-image" src='http://localhost:5000/static/images/ss.png' />
+        <Image rounded="true" className="post-body-image" src={this.props.post.image} />
         <div className="post-footer">
           <div className="post-info">
             {isAuth ? `${this.props.post.author}` : 'Anonymous'}&nbsp;
