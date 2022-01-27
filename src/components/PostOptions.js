@@ -53,7 +53,7 @@ class PostOptions extends React.Component {
               <FavoriteOutlinedIcon className="IconButton" />
             </IconButton>
           }
-          {this.props.post.hearts}
+          {this.props.post.numLikes}
         </div>
       </div>
     )

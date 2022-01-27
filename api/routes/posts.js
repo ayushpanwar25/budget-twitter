@@ -3,80 +3,81 @@ const router = express.Router();
 
 const Post = require('../models/Post');
 
-const isAuthenticated = (req) => {
+const isAuthenticated = (req, res, next) => {
   try {
     const sessUserId = req.session.passport.user.id;
     User.findById(sessUserId, function (err, user) {
       if (err || !user) throw err;
     });
   }
-  catch (err) {
-    return false;
+  catch {
+    return res.status(401).send('Unauthorized');
   }
-  return true;
+  next();
 }
 
-router.get("/getAll", async (req, res) => {
+router.get('/get', async (req, res) => {
   Post.find({}).sort({ posted: -1 }).exec((err, posts) => {
     if (err) throw err;
     res.json(posts);
   });
 });
 
-router.get("/get/:authorID", async (req, res) => {
-  Post.find({ authorID: req.params.authorID }).sort({ posted: 1 }).exec((err, posts) => {
+router.get('/:authorID/get', async (req, res) => {
+  Post.find({ authorID: req.params.authorID }).sort({ posted: -1 }).exec((err, posts) => {
     if (err) throw err;
     res.json(posts);
   });
 });
 
-router.post("/create", async (req, res) => {
-  if (!isAuthenticated(req)) return res.status(401).send("Unauthorized");
-  else {
-    const { author, authorID, text } = req.body;
-    const post = new Post({ author: author, authorID: authorID, text: text });
-    post
-      .save()
-      .then(res.json(post))
-      .catch(err => console.log(err));
-  }
+router.post('/create', isAuthenticated, async (req, res) => {
+  const { author, authorID, text } = req.body;
+  const post = new Post({
+    author: author,
+    authorID: authorID,
+    text: text
+  });
+  post
+    .save()
+    .then(res.json(post))
+    .catch(err => console.log(err));
 });
 
-router.post("/edit/:id", (req, res) => {
-  if (!isAuthenticated(req)) return res.status(401).send("Unauthorized");
-  else {
-    const text = req.body.text;
-    Post.findById(req.params.id).exec(async (err, post) => {
-      post.text = text;
-      post.save()
-        .then(res.json(post))
-        .catch(err => res.json(err));
-    });
-  }
-});
-
-router.get("/like/:id", async (req, res) => {
-  Post.findByIdAndUpdate(req.params.id, { $inc: { 'hearts': 1 } }).exec((err, post) => {
-    if (err) throw err;
-    res.json("Post liked");
+router.post('/:id/edit', isAuthenticated, (req, res) => {
+  Post.findOneAndUpdate({ _id: req.params.id, authorID: req.session.passport.user.id }, { text: req.body.text }).exec(async (err, post) => {
+    if (err) return res.status(401).send('Unauthorized');
+    return res.json(post);
   });
 });
 
-router.get("/dislike/:id", async (req, res) => {
-  Post.findByIdAndUpdate(req.params.id, { $inc: { 'hearts': -1 } }).exec((err, post) => {
+router.get('/:id/like', isAuthenticated, async (req, res) => {
+  /*really messy and slow. 'like' feature was an afterthought and it does not go well with NoSQL*/
+  Post.findById(req.params.id).exec((err, post) => {
     if (err) throw err;
-    res.json("Post disliked");
+    if (post.likes.includes(req.session.passport.user.id)) return res.status(401).send('Already liked');
+    let likes = post.likes;
+    likes.push(req.session.passport.user.id);
+    post.likes = likes;
+    post.save();
+    return res.json(post);
   });
 });
 
-router.delete('/delete/:id', (req, res) => {
-  if (!isAuthenticated(req)) return res.status(401).send("Unauthorized");
-  else {
-    Post.findByIdAndDelete(req.params.id).exec(async (err, post) => {
-      if (err) throw err;
-      res.status(200).json(post.id);
-    });
-  }
+router.get('/:id/dislike', isAuthenticated, async (req, res) => {
+  Post.findById(req.params.id).exec((err, post) => {
+    if (err) throw err;
+    if (!post.likes.includes(req.session.passport.user.id)) return res.status(401).send('Have not liked');
+    post.likes = post.likes.filter(item => item !== req.session.passport.user.id);
+    post.save();
+    return res.json(post);
+  });
+});
+
+router.delete('/:id/delete', isAuthenticated, (req, res) => {
+  Post.findOneAndDelete({ _id: req.params.id, authorID: req.session.passport.user.id }).exec(async (err, post) => {
+    if (err) return res.status(401).send('Unauthorized');
+    return res.status(200).json('Post deleted');
+  });
 });
 
 module.exports = router;
