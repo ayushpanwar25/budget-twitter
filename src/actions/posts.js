@@ -1,9 +1,8 @@
-import { Identity } from '@mui/material';
-import client from './axiosConfig';
+import client from './axios.config';
 
-export const getAll = () => (dispatch) => {
+export const get = () => (dispatch) => {
   client
-    .get("/posts/getAll")
+    .get("/posts/get")
     .then((res) =>
       dispatch({
         type: "FETCH_SUCCESS",
@@ -19,7 +18,7 @@ export const getAll = () => (dispatch) => {
 
 export const getByAuthor = (authorID) => (dispatch) => {
   client
-    .get(`/posts/get/${authorID}`)
+    .get(`/posts/${authorID}/get`)
     .then((res) =>
       dispatch({
         type: "FETCH_SUCCESS",
@@ -55,15 +54,15 @@ export const create = ({ username, id, text }) => (dispatch) => {
     });
 };
 
-export const edit = (id, text) => (dispatch) => {
+export const editpost = (id, text) => (dispatch) => {
   const headers = {
     headers: {
       "Content-Type": "application/json"
     }
   };
-  const body = JSON.stringify(text);
+  const body = "{\"text\":\"" + text + "\"}";
   client
-    .post(`/posts/edit/${id}`, body, headers)
+    .post(`/posts/${id}/edit`, body, headers)
     .then((res) => {
       dispatch({
         type: "EDIT_SUCCESS",
@@ -79,11 +78,11 @@ export const edit = (id, text) => (dispatch) => {
 
 export const like = (id) => (dispatch) => {
   client
-    .get(`/posts/like/${id}`)
+    .get(`/posts/${id}/like`)
     .then((res) =>
       dispatch({
         type: "LIKE_SUCCESS",
-        payload: id
+        payload: res.data
       })
     )
     .catch(() => {
@@ -95,7 +94,7 @@ export const like = (id) => (dispatch) => {
 
 export const dislike = (id) => (dispatch) => {
   client
-    .get(`/posts/dislike/${id}`)
+    .get(`/posts/${id}/dislike`)
     .then((res) =>
       dispatch({
         type: "DISLIKE_SUCCESS",
@@ -111,7 +110,7 @@ export const dislike = (id) => (dispatch) => {
 
 export const deletepost = (id) => (dispatch) => {
   client
-    .delete(`/posts/delete/${id}`)
+    .delete(`/posts/${id}/delete`)
     .then((res) => {
       dispatch({
         type: "DELETE_SUCCESS",

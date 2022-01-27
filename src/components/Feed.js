@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAll } from '../actions/posts';
+import { get } from '../actions/posts';
 import Post from './Post';
-import './Feed.css';
+import '../scss/Feed.css';
 
 class Feed extends React.Component {
 
   static propTypes = {
     posts: PropTypes.array,
-    getAll: PropTypes.func
+    get: PropTypes.func
   }
 
   componentDidMount() {
-    this.props.getAll()
+    this.props.get()
   }
 
   render() {
@@ -34,4 +34,4 @@ const mapStateToProps = (state) => ({
   posts: state.post.posts
 });
 
-export default connect(mapStateToProps, { getAll })(Feed);
+export default connect(mapStateToProps, { get })(Feed);

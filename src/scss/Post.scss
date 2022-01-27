@@ -1,3 +1,9 @@
+.rounded {
+  border-radius: 0.5rem !important;
+}
+
+@import "~bootstrap/scss/bootstrap.scss";
+
 .post {
   display: flex;
   flex-direction: column;

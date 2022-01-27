@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Card } from 'react-bootstrap';
 import { FaRegUserCircle } from 'react-icons/fa';
-import './UserCard.css';
+//import '../scss/UserCard.css';
 
-class UserCard extends React.Component {
+function UserCard({ isAuth, user }) {
 
-  static propTypes = {
-    isAuth: PropTypes.bool,
-    user: PropTypes.object,
-  }
-
-  render() {
-    return (
-      <div className="user-card">
+  return (
+    <Card style={{ width: '18rem' }}>
+      {/*<Card.Img variant="top" src="holder.js/100px180" />*/}
+      <div className="user-avatar"><FaRegUserCircle /></div>
+      <Card.Body>
+        <Card.Title>Card Title</Card.Title>
+        <Card.Text>
+          {/*<div className="user-card">
         <div className="user-avatar"><FaRegUserCircle /></div>
         <div className="user-card-info">
           <p>Logged in as:</p>
@@ -25,10 +26,20 @@ class UserCard extends React.Component {
             }
           </div>
         </div>
-      </div>
-    )
-  }
+      </div>*/}
+          {this.props.isAuth ?
+            <p>{this.props.user.username}</p>
+            :
+            <p>Guest</p>
+          }
+        </Card.Text>
+      </Card.Body>
+    </Card>
+
+  )
 }
+
+
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuthenticated,

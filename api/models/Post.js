@@ -5,16 +5,18 @@ const PostSchema = new Schema({
   author: { type: String, required: true },
   authorID: { type: String, required: true },
   text: { type: String, required: true },
-  hearts: { type: Number, min: 0, default: 0 },
+  image: { type: String, required: false },
+  likes: { type: Array, default: [] },
   posted: { type: Date, default: Date.now }
 }, {
   collection: 'posts'
 });
 
 PostSchema.method("toJSON", function () {
-  const { _id, ...object } = this.toObject();
+  const { _id, likes, ...object } = this.toObject();
   object.id = _id;
-  //object.posted = posted.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
+  object.numLikes = likes.length;
+  object.likes = likes;
   return object;
 });
 

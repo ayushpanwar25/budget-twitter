@@ -20,6 +20,16 @@ const sessionStore = MongoStore.create({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+/*app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header("Access-Control-Allow-Headers", "text/plain,Origin,X-Requested-With,Content-Type,Accept,content-type,application/json");
+  next();
+})*/
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
@@ -35,16 +45,19 @@ app.use(session({
 const corsOptions = {
   origin: true,
   credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.send("connected to budget-twitter-api");
 });
 
-app.use("/api/users", require("./routes/users"));
-app.use("/api/posts", require("./routes/posts"));
+app.options('/', cors(corsOptions));
+
+app.use('/api/users', require('./routes/users'));
+app.use('/api/posts', require('./routes/posts'));
 
 app.listen(process.env.PORT, () => console.log("API listening on port " + process.env.PORT));

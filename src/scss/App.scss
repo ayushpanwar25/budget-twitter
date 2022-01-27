@@ -1,0 +1,59 @@
+$body-bg: #000;
+$body-color: rgb(255, 255, 255);
+$primary: #00abc9;
+$font-stack: Helvetica, sans-serif;
+
+@import "./Post.scss";
+
+@include media-breakpoint-up(lg) {
+  .navbar {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .left-header,
+  .right-menu {
+    display: none;
+  }
+}
+
+.navbar,
+.left-header {
+  background-color: $body-bg;
+}
+
+.container {
+  font: 100% $font-stack;
+  background-color: $body-bg;
+  color: $primary;
+}
+
+.branding {
+  font-family: "Playfair Display", serif;
+  color: #00abc9;
+  font-weight: 900;
+  font-size: 6em;
+}
+
+.navbar-brand {
+  font-family: "Playfair Display", serif;
+  color: #00abc9;
+  font-weight: 900;
+  font-size: 3em;
+}
+
+.info {
+  font-family: Consolas, monospace;
+  color: rgb(145, 145, 145);
+}
+
+a {
+  color: rgb(145, 145, 145);
+  text-decoration: dotted underline;
+}
+
+p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

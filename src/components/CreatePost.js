@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { create } from "../actions/posts";
-import "./CreatePost.css";
 
 class CreatePost extends React.Component {
 
@@ -35,6 +34,10 @@ class CreatePost extends React.Component {
           value={this.state.text}
           onChange={(e) => this.setState({ text: e.target.value })}
         />
+        {/*<input
+          type="file"
+          name="image"
+          value="" />*/}
         <button
           type="submit"
           className="submit-btn">&quot;Tweet&quot;</button>

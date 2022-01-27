@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from "../actions/auth";
+import Button from 'react-bootstrap/Button';
 import SignUp from './SignUp';
 import Login from './Login';
 import UserCard from './UserCard';
 import CreatePost from './CreatePost';
-import './RightMenu.css';
+import '../scss/RightMenu.css';
 
 class RightMenu extends React.Component {
 
@@ -21,22 +22,10 @@ class RightMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      SignUpClass: 'hidden',
-      LogInClass: 'hidden',
-      CreatePostClass: 'hidden'
+      SignUpModal: false,
+      LogInModal: false,
+      CreatePostModal: false
     };
-  }
-
-  expandSignUp = () => {
-    this.state.SignUpClass === 'hidden' ? this.setState({ SignUpClass: 'visible' }) : this.setState({ SignUpClass: 'hidden' });
-  }
-
-  expandLogIn = () => {
-    this.state.LogInClass === 'hidden' ? this.setState({ LogInClass: 'visible' }) : this.setState({ LogInClass: 'hidden' });
-  }
-
-  expandCreatePost = () => {
-    this.state.CreatePostClass === 'hidden' ? this.setState({ CreatePostClass: 'visible' }) : this.setState({ CreatePostClass: 'hidden' });
   }
 
   render() {
@@ -44,16 +33,30 @@ class RightMenu extends React.Component {
       <div className="right-menu">
         {!this.props.isAuth ?
           <div className="menu-buttons">
-            <button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
+            <Button variant="primary" onClick={() => this.setState({ SignUpModal: true })}>
+              SIGN UP
+            </Button>
+            <SignUp
+              show={this.state.SignUpModal}
+              onHide={() => this.setState({ SignUpModal: false })}
+            />
+            <Button variant="primary" onClick={() => this.setState({ LogInModal: true })}>
+              LOG IN
+            </Button>
+            <Login
+              show={this.state.LogInModal}
+              onHide={() => this.setState({ LogInModal: false })}
+            />
+            {/*<button className="menu-btn" onClick={this.expandSignUp}>SIGN UP</button>
             <div className={`pop-up ${this.state.SignUpClass}`}>
               <SignUp />
               {this.props.signupSuccess ? <p>Sign up successful!</p> : null}
-            </div>
+        </div>
             <button className="menu-btn" onClick={this.expandLogIn}>EXISTING USER? LOG IN</button>
             <div className={`pop-up ${this.state.LogInClass}`}>
               <Login />
               {this.props.loginResponse ? <p className='error-message'>{this.props.loginResponse}</p> : null}
-            </div>
+            </div>*/}
           </div>
           :
           <div className="menu-buttons">

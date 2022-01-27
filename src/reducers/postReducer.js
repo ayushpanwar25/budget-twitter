@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
 
     case "EDIT_SUCCESS":
       return {
-        ...state,
         posts: state.posts.map((post) => {
           if (post.id !== action.payload.id) {
             return post
@@ -30,10 +29,32 @@ export default function (state = initialState, action) {
       }
 
     case "LIKE_SUCCESS":
-      return state
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post.id !== action.payload.id) {
+            return post
+          }
+          return {
+            ...post,
+            hearts: action.payload.hearts
+          }
+        })
+      }
 
     case "DISLIKE_SUCCESS":
-      return state
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post.id !== action.payload.id) {
+            return post
+          }
+          return {
+            ...post,
+            hearts: action.payload.hearts
+          }
+        })
+      }
 
     case "DELETE_SUCCESS":
       return {

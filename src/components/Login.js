@@ -1,4 +1,5 @@
 import React from 'react';
+import { Modal, Form, Button, FloatingLabel } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from "../actions/auth";
@@ -15,31 +16,37 @@ class Login extends React.Component {
     const { username, password } = this.state;
     const newUser = { username, password };
     this.props.login(newUser);
+    this.props.onHide();
   }
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="input-form">
-        <input
-          id="new-username"
-          type="text"
-          className="text-field"
-          placeholder="Username"
-          value={this.state.username}
-          onChange={(e) => this.setState({ username: e.target.value })}
-        />
-        <input
-          id="new-password"
-          type="password"
-          className="text-field"
-          placeholder="Password"
-          value={this.state.password}
-          onChange={(e) => this.setState({ password: e.target.value })}
-        />
-        <button
-          type="submit"
-          className="submit-btn">Sign in</button>
-      </form>
+      <Modal
+        {...this.props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Title id="example-modal-sizes-title-sm">
+          Welcome back
+        </Modal.Title>
+        <Modal.Body>
+          <Form>
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Username"
+              className="mb-3"
+            >
+              <Form.Control type="text" placeholder="Username" />
+            </FloatingLabel>
+            <FloatingLabel controlId="floatingPassword" label="Password">
+              <Form.Control type="password" placeholder="Password" />
+            </FloatingLabel>
+            <Button type="submit">Sign in</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
     )
   }
 }

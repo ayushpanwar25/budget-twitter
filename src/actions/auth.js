@@ -1,4 +1,4 @@
-import client from './axiosConfig';
+import client from './axios.config';
 
 export const checkAuthentication = () => (dispatch) => {
   client
@@ -31,18 +31,26 @@ export const signup = ({ username, password }) => (dispatch) => {
   };
   const body = JSON.stringify({ username, password });
   client
-    .post("/users/sign-up", body, headers)
+    .post("/users/signup", body, headers)
     .then((res) => {
       if (res.status === 200) {
-        dispatch({ type: "SIGNUP_SUCCESS" });
+        dispatch({
+          type: "SIGNUP_SUCCESS",
+          payload: res.data
+        });
       }
       else {
-        dispatch({ type: "SIGNUP_FAIL" });
+        dispatch({
+          type: "SIGNUP_FAIL",
+          payload: res.data
+        });
+
       }
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch({
-        type: "SIGNUP_FAIL"
+        type: "SIGNUP_FAIL",
+        payload: err
       });
     });
 };
@@ -55,7 +63,7 @@ export const login = ({ username, password }) => (dispatch) => {
   };
   const body = JSON.stringify({ username, password });
   client
-    .post("/users/log-in", body, headers)
+    .post("/users/login", body, headers)
     .then((res) => {
       if (res.status === 200) {
         dispatch({
@@ -75,7 +83,7 @@ export const login = ({ username, password }) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: "LOGIN_FAIL",
-        payload: "Incorrect username or password"
+        payload: err
       });
     });
 };
