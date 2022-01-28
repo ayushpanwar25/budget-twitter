@@ -45,7 +45,6 @@ function MenuButtons(props) {
             SIGN OUT
           </Button>
         </Nav>
-
       }
     </div>
   )

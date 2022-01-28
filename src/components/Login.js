@@ -37,7 +37,7 @@ function Login(props) {
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="off" />
           </FloatingLabel>
-          <FloatingLabel controlId="floatingPassword" label="Password">
+          <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
             <Form.Control
               type="password"
               placeholder="Password"

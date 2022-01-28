@@ -15,8 +15,10 @@ function Confirmation(props) {
       <Modal.Title id="example-modal-sizes-title-sm">
         Are you sure you want to delete this post?
       </Modal.Title>
-      <Button variant="secondary" type="submit" style={{ backgroundColor: "red" }} onClick={() => { props.deletepost(props.postid); props.onHide() }}>Yes</Button>
-      <Button variant="secondary" type="submit" onClick={() => props.onHide()}>Cancel</Button>
+      <Modal.Body className="btn-only">
+        <Button variant="secondary" type="submit" style={{ backgroundColor: "red", border: "none", marginRight: "0.75rem" }} onClick={() => { props.deletepost(props.postid); props.onHide() }}>Yes</Button>
+        <Button variant="secondary" type="submit" onClick={() => props.onHide()}>Cancel</Button>
+      </Modal.Body>
     </Modal >
   )
 }

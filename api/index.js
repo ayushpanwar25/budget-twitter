@@ -1,12 +1,17 @@
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
-const app = express();
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose');
-const cors = require('cors');
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import { URL } from 'url';
+import usersRoute from './routes/users.js';
+import postsRoute from './routes/posts.js';
 
+const __dirname = new URL('.', import.meta.url).pathname;
+
+const app = express();
 dotenv.config();
 mongoose
   .connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
@@ -20,15 +25,7 @@ const sessionStore = MongoStore.create({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/static', express.static(path.join(__dirname, 'public')))
-
-/*app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header("Access-Control-Allow-Headers", "text/plain,Origin,X-Requested-With,Content-Type,Accept,content-type,application/json");
-  next();
-})*/
+app.use('/static', express.static('public'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -51,13 +48,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/', (req, res) => {
-  res.send("connected to budget-twitter-api");
+app.get('/index', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.options('/', cors(corsOptions));
 
-app.use('/api/users', require('./routes/users'));
-app.use('/api/posts', require('./routes/posts'));
+app.use('/api/users', usersRoute);
+app.use('/api/posts', postsRoute);
 
 app.listen(process.env.PORT, () => console.log("API listening on port " + process.env.PORT));

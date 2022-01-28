@@ -1,34 +1,26 @@
-import React from 'react';
-import { Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { React, useEffect } from 'react';
+import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 import { get } from '../actions/posts';
 import Post from './Post';
-import '../scss/Feed.css';
+import '../scss/Feed.scss';
 
-class Feed extends React.Component {
+function Feed(props) {
 
-  static propTypes = {
-    posts: PropTypes.array,
-    get: PropTypes.func
-  }
+  useEffect(() => {
+    props.get();
+  }, []);
 
-  componentDidMount() {
-    this.props.get()
-  }
-
-  render() {
-    return (
-      <Col xs={12} md={12} lg={4} className="feed">
-        {this.props.posts.map(post => (
-          <Post
-            key={post.id}
-            post={post}
-          />
-        ))}
-      </Col>
-    );
-  }
+  return (
+    <Col xs={12} md={12} lg={4} className="feed">
+      {props.posts.map(post => (
+        <Post
+          key={post.id}
+          post={post}
+        />
+      ))}
+    </Col>
+  );
 }
 
 const mapStateToProps = (state) => ({

@@ -1,16 +1,25 @@
-const express = require('express');
+import express from 'express';
+import multer from 'multer';
+import { ImagePool } from '@squoosh/lib';
+import { cpus } from 'os';
+import fs from 'fs/promises';
+import Post from '../models/Post.js';
+import User from '../models/User.js';
 const router = express.Router();
-const Post = require('../models/Post');
-const User = require('../models/User');
-const multer = require('multer');
 
-const upload = multer({ dest: 'uploads/' });
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '/public/images');
+const upload = multer({
+  limits: {
+    fileSize: 2000000
   },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname);
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpeg|jpg|png|gif|webp)$/)) {
+      return cb(
+        new Error(
+          'only upload images of max 2MB.'
+        )
+      );
+    }
+    cb(undefined, true);
   }
 });
 
@@ -27,6 +36,23 @@ const isAuthenticated = (req, res, next) => {
   next();
 }
 
+const imgProcess = async (originalimage) => {
+  const imagePool = new ImagePool(cpus().length);
+  const image = imagePool.ingestImage(originalimage);
+  await image.decoded;
+  const encodeOptions = {
+    webp: {
+      quality: 75
+    },
+  };
+  await image.encode(encodeOptions);
+  const rawEncodedImage = (await image.encodedWith.webp).binary;
+  const imgPath = `/images/${Date.now() + '-' + Math.round(Math.random() * 1E9) + '.webp'}`;
+  fs.writeFile(`${'public' + imgPath}`, rawEncodedImage);
+  await imagePool.close();
+  return imgPath;
+}
+
 router.get('/get', async (req, res) => {
   Post.find({}).sort({ posted: -1 }).exec((err, posts) => {
     if (err) throw err;
@@ -41,31 +67,39 @@ router.get('/:authorID/get', async (req, res) => {
   });
 });
 
-router.post('/create', isAuthenticated, async (req, res) => {
+router.post('/create', isAuthenticated, upload.single('file'), async (req, res) => {
   const { author, authorID, text } = req.body;
-  const post = new Post({
-    author: author,
-    authorID: authorID,
-    text: text
-  });
-  post
-    .save()
-    .then(res.json(post))
-    .catch(err => console.log(err));
-});
-
-router.post('/img/upload', upload.single('file'), (req, res) => {
+  let post;
   if (!req.file) {
-    console.log("Image upload failed");
-    return res.send({
-      success: false
+    post = new Post({
+      author: author,
+      authorID: authorID,
+      text: text
     });
+    post
+      .save()
+      .then(res.json(post))
+      .catch(err => console.log(err));
   }
   else {
-    console.log("Image uploaded");
-    return res.send({
-      success: true
-    })
+    imgProcess(req.file.buffer)
+      .then(async (imagePath) => {
+        post = new Post({
+          author: author,
+          authorID: authorID,
+          text: text,
+          image: imagePath
+        });
+      })
+      .then(() => {
+        post
+          .save()
+          .then(res.json(post))
+          .catch(err => console.log(err));
+      })
+      .catch((err) => {
+        res.send("Interal error. Can't save image");
+      });
   }
 });
 
@@ -77,7 +111,7 @@ router.post('/:id/edit', isAuthenticated, (req, res) => {
 });
 
 router.get('/:id/like', isAuthenticated, async (req, res) => {
-  /*really messy and slow. 'like' feature was an afterthought and it does not go well with NoSQL*/
+  /*'like' feature was an afterthought and it does not go well with NoSQL*/
   Post.findById(req.params.id).exec((err, post) => {
     if (err) throw err;
     if (post.likes.includes(req.session.passport.user.id)) return res.status(401).send('Already liked');
@@ -106,4 +140,4 @@ router.delete('/:id/delete', isAuthenticated, (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

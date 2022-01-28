@@ -32,13 +32,17 @@ export const getByAuthor = (authorID) => (dispatch) => {
     });
 }
 
-export const create = ({ username, id, text }) => (dispatch) => {
+export const create = ({ username, id, text, image }) => (dispatch) => {
   const headers = {
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'multipart/form-data'
     }
   };
-  const body = JSON.stringify({ author: username, authorID: id, text: text });
+  const body = new FormData();
+  body.append('author', username);
+  body.append('authorID', id);
+  body.append('text', text);
+  if (image) body.append('file', image);
   client
     .post("/posts/create", body, headers)
     .then((res) => {

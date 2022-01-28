@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { FaGithub } from 'react-icons/fa';
 import '../scss/LeftHeader.scss';
 

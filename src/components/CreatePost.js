@@ -6,13 +6,16 @@ import { create } from "../actions/posts";
 function CreatePost(props) {
 
   const [text, setText] = useState('');
+  const [image, setImage] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const { id, username } = props.user;
     const newPost = { username, id, text };
+    if (image) newPost.image = image;
     props.create(newPost);
     setText('');
+    setImage('');
     props.onHide();
   }
 
@@ -30,12 +33,18 @@ function CreatePost(props) {
       <Modal.Body>
         <Form onSubmit={onSubmit}>
           <Form.Control
-            as="textarea" rows={5}
+            as="textarea" rows={7}
             type="text"
             placeholder="What's on your mind?"
             defaultValue={text}
             onChange={(e) => setText(e.target.value)}
             autoComplete="off" />
+          <Form.Control
+            name="file"
+            type="file"
+            accept="image/*"
+            defaultValue={image}
+            onChange={(e) => setImage(e.target.value)} />
           <Button variant="secondary" type="submit">&quot;Tweet&quot;</Button>
         </Form>
       </Modal.Body>

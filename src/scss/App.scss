@@ -23,7 +23,7 @@ $navbar-dark-color: #00abc9;
 
 .btn-primary {
   color: $body-color;
-  border-radius: 1rem;
+  border-radius: 5rem;
   font-weight: 500;
   padding: 0.5rem 2rem;
 }
@@ -31,9 +31,8 @@ $navbar-dark-color: #00abc9;
 .btn-secondary {
   color: white;
   border: 1px solid rgba($primary, 0.5);
-  margin-top: 1rem;
   background-color: $body-bg;
-  border-radius: 1rem;
+  border-radius: 5rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
 }
@@ -41,9 +40,8 @@ $navbar-dark-color: #00abc9;
 .btn-secondary:hover {
   color: white;
   border: 1px solid rgba($primary, 0.5);
-  margin-top: 1rem;
   background-color: rgba(255, 255, 255, 0.116);
-  border-radius: 1rem;
+  border-radius: 5rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
 }
@@ -64,8 +62,25 @@ $navbar-dark-color: #00abc9;
   padding-left: 1.25rem;
   padding-top: 1rem;
 }
+
 .form-control {
   border: 1px solid rgba(255, 255, 255, 0.116);
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid rgba($primary, 0.5);
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .navbar,
@@ -148,23 +163,33 @@ body {
   border: 1px solid #005a69;
 }
 
-.post-body-text {
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   font-size: 1.2rem;
-  padding: 5%;
+  padding: 1.75rem;
 }
 
-.post-footer {
+.post-body-image {
+  overflow: hidden;
+  width: 100%;
+  max-height: 600px;
+  //margin: -20px 0px -20px 0px;
+}
+
+.post-header {
   font-weight: 500;
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #005a69;
+  border-bottom: 1px solid #005a69;
   padding: 3%;
   padding-left: 3%;
   padding-right: 3%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  //border-bottom-left-radius: 10px;
+  //border-bottom-right-radius: 10px;
   /*background-color: rgba(0, 217, 255, 0.329);*/
 }
 

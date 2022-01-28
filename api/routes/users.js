@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
 const router = express.Router();
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
 
 router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
@@ -87,4 +87,4 @@ router.get('/verify', function (req, res) {
   return res.status(200).send(req.session.passport.user);
 });
 
-module.exports = router;
+export default router;

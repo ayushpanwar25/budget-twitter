@@ -1,0 +1,14 @@
+.feed {
+  height: 100vh;
+  flex-shrink: 1;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

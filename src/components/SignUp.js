@@ -33,15 +33,15 @@ function SignUp(props) {
               placeholder="Username"
               defaultValue={username}
               onChange={(e) => setUsername(e.target.value)}
-              autoComplete="off" />
+              autoComplete="new-username" />
           </FloatingLabel>
-          <FloatingLabel controlId="floatingPassword" label="Password">
+          <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
             <Form.Control
               type="password"
               placeholder="Password"
               defaultValue={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="off" />
+              autoComplete="new-password" />
           </FloatingLabel>
           <Button variant="secondary" type="submit">Sign Up</Button>
           <p style={{ color: "red", paddingTop: "1rem" }}>{props.signupresponse}</p>
