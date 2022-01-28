@@ -3,13 +3,21 @@
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  padding-top: 7%;
-  padding-left: 2rem;
+  padding-top: 8rem;
   padding-bottom: 2rem;
-  font-family: Roboto, sans-serif;
-  color: white;
+  padding-right: 20%;
+  gap: 5rem;
 }
 
+.flex-column {
+  gap: 1rem;
+  width: 60%;
+}
+.navbar-nav {
+  gap: 1rem;
+  width: 18rem;
+}
+/*
 .hidden {
   display: none;
 }
@@ -107,4 +115,4 @@
 .text-field:focus {
   outline: none;
   border-bottom: 2px solid #00abc9;
-}
+}*/

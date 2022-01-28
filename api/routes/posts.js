@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
 const Post = require('../models/Post');
+const User = require('../models/User');
+const multer = require('multer');
+
+const upload = multer({ dest: 'uploads/' });
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '/public/images');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname);
+  }
+});
 
 const isAuthenticated = (req, res, next) => {
   try {
@@ -43,8 +54,23 @@ router.post('/create', isAuthenticated, async (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.post('/img/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    console.log("Image upload failed");
+    return res.send({
+      success: false
+    });
+  }
+  else {
+    console.log("Image uploaded");
+    return res.send({
+      success: true
+    })
+  }
+});
+
 router.post('/:id/edit', isAuthenticated, (req, res) => {
-  Post.findOneAndUpdate({ _id: req.params.id, authorID: req.session.passport.user.id }, { text: req.body.text }).exec(async (err, post) => {
+  Post.findOneAndUpdate({ _id: req.params.id, authorID: req.session.passport.user.id }, { text: req.body.text }, { new: true }).exec(async (err, post) => {
     if (err) return res.status(401).send('Unauthorized');
     return res.json(post);
   });
@@ -59,7 +85,7 @@ router.get('/:id/like', isAuthenticated, async (req, res) => {
     likes.push(req.session.passport.user.id);
     post.likes = likes;
     post.save();
-    return res.json(post);
+    return res.json({ id: post.id, numLikes: post.likes.length });
   });
 });
 
@@ -69,14 +95,14 @@ router.get('/:id/dislike', isAuthenticated, async (req, res) => {
     if (!post.likes.includes(req.session.passport.user.id)) return res.status(401).send('Have not liked');
     post.likes = post.likes.filter(item => item !== req.session.passport.user.id);
     post.save();
-    return res.json(post);
+    return res.json({ id: post.id, numLikes: post.likes.length });
   });
 });
 
 router.delete('/:id/delete', isAuthenticated, (req, res) => {
   Post.findOneAndDelete({ _id: req.params.id, authorID: req.session.passport.user.id }).exec(async (err, post) => {
     if (err) return res.status(401).send('Unauthorized');
-    return res.status(200).json('Post deleted');
+    return res.status(200).json(req.params.id);
   });
 });
 

@@ -1,47 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { Container, Row } from 'react-bootstrap';
+import NavBar from './components/NavBar';
+import LeftHeader from './components/LeftHeader';
 import Feed from './components/Feed';
 import RightMenu from './components/RightMenu';
 import { checkAuthentication } from './actions/auth';
-import './App.css';
-import { FaGithub } from 'react-icons/fa'
-import store from './store';
+import './scss/App.scss';
 
-class App extends React.Component {
+function App() {
 
-  static propTypes = {
-    isAuth: PropTypes.bool,
-    user: PropTypes.object,
-  }
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    store.dispatch(checkAuthentication());
-  }
+  useEffect(() => {
+    dispatch(checkAuthentication());
+  })
 
-  render() {
-    return (
-      <div className="App">
-        <header className="main-header">
-          <div className="branding">
-            <p>budget</p>twitter
-          </div>
-          <div className="info">
-            <p>Twitter-like blog created with MERN</p>
-            <p>Ayush Panwar, 2022</p>
-            <p><a href="https://github.com/payyup/budget-twitter" target="_blank" rel="noreferrer"><FaGithub className="github-logo" /> github.com/payyup</a></p>
-          </div>
-        </header>
-        <Feed />
-        <RightMenu />
-      </div>
-    )
-  }
+  return (
+    <div className="App">
+      <NavBar />
+      <Container fluid>
+        <Row>
+          <LeftHeader />
+          <Feed />
+          <RightMenu />
+        </Row>
+      </Container>
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuthenticated,
-  user: state.auth.user
+  isAuth: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { checkAuthentication })(App);

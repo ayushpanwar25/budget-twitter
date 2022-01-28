@@ -1,18 +1,15 @@
 import { React, useState } from 'react';
-import { connect } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { create } from "../actions/posts";
+import { connect } from 'react-redux';
+import { editpost } from "../actions/posts";
 
-function CreatePost(props) {
+function EditPost(props) {
 
   const [text, setText] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { id, username } = props.user;
-    const newPost = { username, id, text };
-    props.create(newPost);
-    setText('');
+    props.editpost(props.post.id, text);
     props.onHide();
   }
 
@@ -25,7 +22,7 @@ function CreatePost(props) {
       centered
     >
       <Modal.Title id="example-modal-sizes-title-sm">
-        Create Post
+        Edit Post
       </Modal.Title>
       <Modal.Body>
         <Form onSubmit={onSubmit}>
@@ -33,7 +30,7 @@ function CreatePost(props) {
             as="textarea" rows={5}
             type="text"
             placeholder="What's on your mind?"
-            defaultValue={text}
+            defaultValue={props.post.text}
             onChange={(e) => setText(e.target.value)}
             autoComplete="off" />
           <Button variant="secondary" type="submit">&quot;Tweet&quot;</Button>
@@ -41,10 +38,9 @@ function CreatePost(props) {
       </Modal.Body>
     </Modal>
   )
+
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user
-});
+const mapStateToProps = () => ({});
 
-export default connect(mapStateToProps, { create })(CreatePost);
+export default connect(mapStateToProps, { editpost })(EditPost);

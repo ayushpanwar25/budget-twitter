@@ -1,9 +1,10 @@
 import React from 'react';
+import { Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get } from '../actions/posts';
 import Post from './Post';
-import './Feed.css';
+import '../scss/Feed.css';
 
 class Feed extends React.Component {
 
@@ -18,14 +19,14 @@ class Feed extends React.Component {
 
   render() {
     return (
-      <div className="feed">
+      <Col xs={12} md={12} lg={4} className="feed">
         {this.props.posts.map(post => (
           <Post
             key={post.id}
             post={post}
           />
         ))}
-      </div>
+      </Col>
     );
   }
 }

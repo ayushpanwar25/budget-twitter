@@ -50,7 +50,7 @@ export const signup = ({ username, password }) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: "SIGNUP_FAIL",
-        payload: err
+        payload: err.response.data
       });
     });
 };
@@ -72,7 +72,6 @@ export const login = ({ username, password }) => (dispatch) => {
         });
       }
       else {
-        console.log(res.session);
         dispatch({
           type: "LOGIN_FAIL",
           payload: res.data
@@ -83,7 +82,7 @@ export const login = ({ username, password }) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: "LOGIN_FAIL",
-        payload: err
+        payload: err.response.data
       });
     });
 };
@@ -97,6 +96,6 @@ export const logout = () => (dispatch) => {
       })
     )
     .catch((err) => {
-      console.log(err);
+      console.log(err.response.data);
     });
 }

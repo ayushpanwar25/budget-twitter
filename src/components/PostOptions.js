@@ -2,11 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deletepost, like, dislike } from '../actions/posts';
-import { IconButton } from '@mui/material';
+import EditPost from './EditPost';
+import Confirmation from './Confirmation';
+import IconButton from '@mui/material/IconButton';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import './PostOptions.css';
+import EditIcon from '@mui/icons-material/Edit';
+import '../scss/PostOptions.css';
 
 class PostOptions extends React.Component {
 
@@ -19,7 +22,16 @@ class PostOptions extends React.Component {
   }
 
   state = {
-    liked: false
+    liked: false,
+    editpopup: false,
+    deleteconfirm: false
+  }
+
+  componentDidMount() {
+    const { post, user } = this.props;
+    if (post.likes.includes(user.id)) {
+      this.setState({ liked: true });
+    }
   }
 
   render() {
@@ -27,9 +39,24 @@ class PostOptions extends React.Component {
     return (
       <div className="post-options">
         {this.props.user.id === this.props.post.authorID &&
-          <IconButton aria-label="delete" onClick={() => this.props.deletepost(this.props.post.id)}>
-            <DeleteOutlineOutlinedIcon className="IconButton" />
-          </IconButton>
+          <div className="super-options">
+            <IconButton aria-label="delete" onClick={() => this.setState({ deleteconfirm: true })}>
+              <DeleteOutlineOutlinedIcon className="IconButton" />
+            </IconButton>
+            <Confirmation
+              postid={this.props.post.id}
+              show={this.state.deleteconfirm}
+              onHide={() => this.setState({ deleteconfirm: false })}
+            />
+            <IconButton aria-label="edit" onClick={() => this.setState({ editpopup: true })}>
+              <EditIcon className="IconButton" />
+            </IconButton>
+            <EditPost
+              post={this.props.post}
+              show={this.state.editpopup}
+              onHide={() => this.setState({ editpopup: false })}
+            />
+          </div>
         }
         <div className="post-options-likes">
           {!this.state.liked ?

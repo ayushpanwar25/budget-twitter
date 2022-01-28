@@ -98,7 +98,7 @@ export const dislike = (id) => (dispatch) => {
     .then((res) =>
       dispatch({
         type: "DISLIKE_SUCCESS",
-        payload: id
+        payload: res.data
       })
     )
     .catch(() => {
