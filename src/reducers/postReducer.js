@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
           }
           return {
             ...post,
-            hearts: action.payload.hearts
+            numLikes: action.payload.numLikes
           }
         })
       }
@@ -51,7 +51,7 @@ export default function (state = initialState, action) {
           }
           return {
             ...post,
-            hearts: action.payload.hearts
+            numLikes: action.payload.numLikes
           }
         })
       }

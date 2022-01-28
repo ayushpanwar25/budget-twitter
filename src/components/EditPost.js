@@ -10,6 +10,7 @@ function EditPost(props) {
   const onSubmit = async (e) => {
     e.preventDefault();
     props.editpost(props.post.id, text);
+    props.onHide();
   }
 
   return (

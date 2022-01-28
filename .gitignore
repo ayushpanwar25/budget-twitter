@@ -5,7 +5,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/actions/axiosConfig.js
+/src/actions/axios.config.js
 .env
 
 # testing
