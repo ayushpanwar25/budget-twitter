@@ -6,16 +6,18 @@ import { create } from "../actions/posts";
 function CreatePost(props) {
 
   const [text, setText] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(undefined);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { id, username } = props.user;
-    const newPost = { username, id, text };
-    if (image) newPost.image = image;
-    props.create(newPost);
+    const formData = new FormData();
+    formData.append('author', props.user.username);
+    formData.append('authorID', props.user.id);
+    formData.append('text', text);
+    if (image) formData.append('file', image);
+    props.create(formData);
     setText('');
-    setImage('');
+    setImage(undefined);
     props.onHide();
   }
 
@@ -44,7 +46,7 @@ function CreatePost(props) {
             type="file"
             accept="image/*"
             defaultValue={image}
-            onChange={(e) => setImage(e.target.value)} />
+            onChange={(e) => setImage(e.target.files[0])} />
           <Button variant="secondary" type="submit">&quot;Tweet&quot;</Button>
         </Form>
       </Modal.Body>

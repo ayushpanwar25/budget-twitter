@@ -32,17 +32,13 @@ export const getByAuthor = (authorID) => (dispatch) => {
     });
 }
 
-export const create = ({ username, id, text, image }) => (dispatch) => {
+export const create = (body) => (dispatch) => {
   const headers = {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   };
-  const body = new FormData();
-  body.append('author', username);
-  body.append('authorID', id);
-  body.append('text', text);
-  if (image) body.append('file', image);
+
   client
     .post("/posts/create", body, headers)
     .then((res) => {
@@ -127,3 +123,24 @@ export const deletepost = (id) => (dispatch) => {
       });
     });
 }
+
+export const addAvatar = (body) => (dispatch) => {
+  const headers = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+  client
+    .post("/posts/addAvatar", body, headers)
+    .then((res) => {
+      dispatch({
+        type: "AVATAR_SUCCESS",
+        payload: res.data
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: "AVATAR_FAIL"
+      });
+    });
+};

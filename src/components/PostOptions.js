@@ -66,7 +66,7 @@ function PostOptions(props) {
             <FavoriteOutlinedIcon style={{ fill: "#ff0095" }} />
           </IconButton>
         }
-        <span className={liked && "liked"}>{props.post.numLikes}</span>
+        <span className={liked ? "liked" : undefined}>{props.post.numLikes}</span>
       </div>
     </div>
   )

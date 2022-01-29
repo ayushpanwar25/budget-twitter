@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
-axios.defaults.withCredentials = true;
-
-const client = axios.create({});
+const client = axios.create({
+  baseURL: 'http://192.168.0.10:5000/api/',
+  withCredentials: true,
+});
 
 export default client;

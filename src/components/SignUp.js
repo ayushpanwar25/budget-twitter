@@ -44,7 +44,7 @@ function SignUp(props) {
               autoComplete="new-password" />
           </FloatingLabel>
           <Button variant="secondary" type="submit">Sign Up</Button>
-          <p style={{ color: "red", paddingTop: "1rem" }}>{props.signupresponse}</p>
+          <p style={{ paddingTop: "1rem" }}>{props.signupresponse}</p>
         </Form>
       </Modal.Body>
     </Modal>

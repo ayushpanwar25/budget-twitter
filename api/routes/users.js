@@ -24,7 +24,7 @@ passport.use(new LocalStrategy(function verify(username, password, done) {
 }));
 
 passport.serializeUser(function (user, done) {
-  const sessData = { id: user.id, username: user.username };
+  const sessData = { id: user.id, username: user.username, avatar: (user.avatar || undefined) };
   done(null, sessData);
 });
 

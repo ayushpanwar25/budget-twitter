@@ -5,11 +5,11 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { URL } from 'url';
+import { fileURLToPath } from 'url';
 import usersRoute from './routes/users.js';
 import postsRoute from './routes/posts.js';
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const __filename = fileURLToPath(import.meta.url);
 
 const app = express();
 dotenv.config();
@@ -48,8 +48,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/index', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', (req, res) => {
+  //res.sendFile(new URL('./public/index.html', import.meta.url).pathname);
+  res.sendFile(path.join(__filename, '../public', 'index.html'));
 });
 
 app.options('/', cors(corsOptions));

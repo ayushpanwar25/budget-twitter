@@ -71,6 +71,7 @@ router.post('/create', isAuthenticated, upload.single('file'), async (req, res) 
   const { author, authorID, text } = req.body;
   let post;
   if (!req.file) {
+    console.log("still here");
     post = new Post({
       author: author,
       authorID: authorID,
@@ -101,6 +102,14 @@ router.post('/create', isAuthenticated, upload.single('file'), async (req, res) 
         res.send("Interal error. Can't save image");
       });
   }
+});
+
+router.post('/addAvatar', isAuthenticated, upload.single('file'), async (req, res) => {
+  const avt = await imgProcess(req.file.buffer);
+  User.findByIdAndUpdate(req.session.passport.user.id, { avatar: avt }, { new: true }, (err, user) => {
+    if (err) throw err;
+    return res.json(user.avatar);
+  });
 });
 
 router.post('/:id/edit', isAuthenticated, (req, res) => {

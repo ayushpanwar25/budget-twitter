@@ -34,3 +34,8 @@ api/.env
 README.md
 api/.prettierrc.json
 .gitignore
+
+
+#build
+/build
+/api/public

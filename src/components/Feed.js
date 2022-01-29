@@ -11,9 +11,11 @@ function Feed(props) {
     props.get();
   }, []);
 
+  const posts = props.posts;
+
   return (
     <Col xs={12} md={12} lg={4} className="feed">
-      {props.posts.map(post => (
+      {posts.map(post => (
         <Post
           key={post.id}
           post={post}
